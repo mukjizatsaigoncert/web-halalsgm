@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x /home/khaled/programming/SAIGONCERT/backend-sfc/scripts/generate-secrets.sh)",
+      "Bash(/home/khaled/programming/SAIGONCERT/backend-sfc/scripts/generate-secrets.sh)",
+      "Bash(node *)",
+      "Bash(npx --yes typescript@5 --noEmit --isolatedModules --target ES2019 --module CommonJS --moduleResolution Node --esModuleInterop --skipLibCheck --strict false --allowJs --jsx preserve src/index.ts src/middlewares/sentry.ts src/middlewares/rate-limit.ts src/utils/sanitize.ts src/utils/recaptcha.ts src/api/health/controllers/health.ts src/api/health/routes/health.ts src/api/contact/controllers/contact.ts src/api/contact/routes/contact.ts src/api/contact/content-types/contact/lifecycles.ts src/api/career/content-types/career/lifecycles.ts src/api/article/content-types/article/lifecycles.ts)",
+      "Read(//tmp/**)",
+      "Bash(npm pack *)",
+      "Bash(tar xzf *)",
+      "Bash(/tmp/package/bin/tsc --noEmit --target ES2019 --module CommonJS --moduleResolution Node --esModuleInterop --skipLibCheck --strict false --allowJs --resolveJsonModule --types node src/middlewares/rate-limit.ts src/utils/sanitize.ts src/utils/recaptcha.ts src/api/health/controllers/health.ts src/api/health/routes/health.ts src/api/contact/controllers/contact.ts src/api/contact/content-types/contact/lifecycles.ts src/api/career/content-types/career/lifecycles.ts src/api/article/content-types/article/lifecycles.ts src/middlewares/sentry.ts src/index.ts)",
+      "Bash(/tmp/package/bin/tsc --noEmit --target ES2019 --module CommonJS --moduleResolution Node --esModuleInterop --skipLibCheck --strict false --allowJs --resolveJsonModule --types '' --lib ES2020,DOM src/middlewares/rate-limit.ts src/utils/sanitize.ts src/utils/recaptcha.ts src/api/health/controllers/health.ts src/api/health/routes/health.ts src/api/contact/controllers/contact.ts src/api/contact/content-types/contact/lifecycles.ts src/api/career/content-types/career/lifecycles.ts src/api/article/content-types/article/lifecycles.ts src/middlewares/sentry.ts src/index.ts)",
+      "Bash(python3 *)",
+      "Bash(chmod +x *)",
+      "Bash(docker compose *)",
+      "Bash(npm -v)",
+      "Bash(npm install *)",
+      "Bash(wait)",
+      "Bash(sudo -n ss -ltnp)",
+      "Bash(docker --version)",
+      "Bash(curl -s -o /dev/null -w \"Frontend: %{http_code}\\\\n\" http://localhost:3001)",
+      "Bash(curl -s -o /dev/null -w \"Backend health: %{http_code}\\\\n\" http://localhost:1337/api/health)",
+      "Bash(docker exec sfc-postgres-1 *)",
+      "Bash(gh auth *)",
+      "Bash(ssh -i ~/.ssh/github -o StrictHostKeyChecking=no -T git@github.com)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(npm view *)"
+    ]
+  }
+}
