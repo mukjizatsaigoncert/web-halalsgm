@@ -1,0 +1,24 @@
+# ---- Secrets ----
+.env
+.env.*
+!.env.example
+
+# ---- Local tooling ----
+.claude/
+.idea/
+.vscode/
+.DS_Store
+
+# ---- Logs / temp ----
+*.log
+*.tmp
+.tmp/
+
+# ---- SSL certs (production only, never commit) ----
+nginx/certs/
+!nginx/certs/.gitkeep
+
+# ---- Backups ----
+*.sql
+*.sql.gz
+backups/
