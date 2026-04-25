@@ -1,0 +1,30 @@
+# Development overrides — overlay on top of docker-compose.yml:
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+#
+# Differences vs prod:
+#  - Expose backend (1337) and frontend (3000) directly to the host
+#  - Relax CORS to localhost
+#  - Skip nginx (comment out reference in compose up)
+#  - Mount source code for live reload (use only with dev targets below)
+
+services:
+  postgres:
+    ports:
+      - "5433:5432"
+
+  backend:
+    ports:
+      - "1337:1337"
+    environment:
+      NODE_ENV: development
+      CORS_ORIGINS: "http://localhost:3001,http://127.0.0.1:3001"
+
+  frontend:
+    ports:
+      - "3001:3000"
+    environment:
+      NODE_ENV: development
+
+  # Not needed in dev — stop it if it was started.
+  nginx:
+    profiles: ["never"]
