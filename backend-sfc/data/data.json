@@ -1,25 +1,25 @@
 {
   "global": {
-    "siteName": "Strapi Blog",
+    "siteName": "Trung Tâm Điện Ảnh và Truyền Hình Sài Gòn",
     "defaultSeo": {
-      "metaTitle": "Page",
-      "metaDescription": "A blog made with Strapi",
+      "metaTitle": "SFC - Trung Tâm Điện Ảnh và Truyền Hình Sài Gòn",
+      "metaDescription": "Trung tâm điện ảnh và truyền hình hàng đầu tại Sài Gòn - chuyên nghiệp, sáng tạo, trách nhiệm",
       "shareImage": null
     },
-    "siteDescription": "A Blog made with Strapi",
+    "siteDescription": "Chuyên nghiệp - Sáng tạo - Trách nhiệm",
     "favicon": null
   },
   "about": {
-    "title": "About the strapi blog",
+    "title": "Về Chúng Tôi",
     "blocks": [
       {
         "__component": "shared.quote",
-        "title": "Thelonius Monk",
-        "body": "You've got to dig it to dig it, you dig?"
+        "title": "Tầm nhìn",
+        "body": "Trở thành trung tâm truyền thông hàng đầu Đông Nam Á vào năm 2030"
       },
       {
         "__component": "shared.rich-text",
-        "body": "## Dedit imago conspicuus cum capillis totidem inhibere\n\nLorem markdownum **rerum**, est limine: columbas: ab infelix hostem arbore nudis\ncrudelis. Videtur reliquit ambo ferrum dote sub amne fatis **illuc**, in magis,\nnec."
+        "body": "## Trung Tâm Điện Ảnh và Truyền Hình Sài Gòn\n\nChúng tôi là đơn vị tiên phong trong lĩnh vực sản xuất nội dung sáng tạo tại Việt Nam. Với đội ngũ chuyên nghiệp và trang thiết bị hiện đại, chúng tôi cung cấp các dịch vụ truyền thông toàn diện từ sản xuất video, thiết kế thương hiệu đến quản lý kênh truyền thông.\n\n## Sứ mệnh\n\nKết nối thương hiệu với khán giả thông qua nội dung sáng tạo và chiến lược truyền thông hiệu quả."
       },
       {
         "__component": "shared.media",
@@ -28,212 +28,132 @@
     ]
   },
   "categories": [
-    {
-      "name": "news",
-      "slug": "news"
-    },
-    {
-      "name": "tech",
-      "slug": "tech"
-    },
-    {
-      "name": "food",
-      "slug": "food"
-    },
-    {
-      "name": "nature",
-      "slug": "nature"
-    },
-    {
-      "name": "story",
-      "slug": "story"
-    }
+    { "name": "Sản Xuất Video", "slug": "san-xuat-video" },
+    { "name": "Thiết Kế Thương Hiệu", "slug": "thiet-ke-thuong-hieu" },
+    { "name": "Truyền Thông", "slug": "truyen-thong" },
+    { "name": "Tổ Chức Sự Kiện", "slug": "to-chuc-su-kien" },
+    { "name": "Quản Lý Kênh Truyền Thông", "slug": "quan-ly-kenh-truyen-thong" }
   ],
   "authors": [
     {
-      "name": "David Doe",
+      "name": "Nguyễn Văn An",
       "email": "daviddoe@strapi.io",
       "avatar": "daviddoe@strapi.io.jpg"
     },
     {
-      "name": "Sarah Baker",
+      "name": "Trần Thị Bích",
       "email": "sarahbaker@strapi.io",
       "avatar": "sarahbaker@strapi.io.jpg"
     }
   ],
   "articles": [
     {
-      "title": "The internet's Own boy",
-      "slug": "the-internet-s-own-boy",
-      "category": {
-        "id": 5
-      },
-      "author": {
-        "id": 1
-      },
-      "description": "Follow the story of Aaron Swartz, the boy who could change the world",
+      "title": "5 xu hướng sản xuất video nổi bật năm 2025",
+      "slug": "xu-huong-san-xuat-video-2025",
+      "category": { "id": 1 },
+      "author": { "id": 1 },
+      "description": "Khám phá những xu hướng sản xuất video đang thống trị ngành truyền thông trong năm 2025",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Probant \n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. \n\n## Abit sua\n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. "
+          "body": "## Xu hướng video ngắn lên ngôi\n\nTrong bối cảnh người dùng ngày càng ưa thích nội dung nhanh, ngắn gọn, các video dưới 60 giây đang chiếm lĩnh thị trường. TikTok, Instagram Reels và YouTube Shorts đang dẫn đầu xu hướng này.\n\n## Sản xuất video theo phong cách cinematic\n\nCác thương hiệu ngày càng đầu tư nhiều hơn vào chất lượng hình ảnh và âm thanh, hướng tới phong cách điện ảnh chuyên nghiệp ngay cả với video thương mại."
         },
         {
           "__component": "shared.quote",
-          "title": "Thelonius Monk",
-          "body": "You've got to dig it to dig it, you dig?"
+          "title": "Chuyên gia truyền thông",
+          "body": "Nội dung chất lượng cao và câu chuyện hấp dẫn chính là chìa khóa để thu hút khán giả trong thời đại số."
         },
-        {
-          "__component": "shared.media",
-          "file": "coffee-art.jpg"
-        },
+        { "__component": "shared.media", "file": "coffee-art.jpg" }
+      ]
+    },
+    {
+      "title": "Xây dựng thương hiệu mạnh trong thời đại số",
+      "slug": "xay-dung-thuong-hieu-thoi-dai-so",
+      "category": { "id": 2 },
+      "author": { "id": 2 },
+      "description": "Hướng dẫn toàn diện về cách xây dựng và phát triển thương hiệu trong môi trường kỹ thuật số hiện đại",
+      "cover": null,
+      "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Spatiantia astra \n\nFoeda, medio silva *errandum*: onus formam munere. Mutata bibulis est auxiliare arces etiamnunc verbis virgineo Priamidas illa Thescelus, nam fit locis lucis auras. Exitus hospes gratulor ut pondere [speslimite](http://www.curas.io/figuram); quid habent, Avernales faciente de. Pervenit Ino sonabile supplex cognoscenti vires, Bacchumque errat miserarum venandi dignabere dedisti. Discrimina iuncosaque virgaque tot sine superest [fissus](http://quos.org/sitet.aspx). Non color esset potest non sumit, sed vix arserat. Nisi immo silva tantum pectusque quos pennis quisquam artus!"
+          "body": "## Tầm quan trọng của bộ nhận diện thương hiệu\n\nMột bộ nhận diện thương hiệu nhất quán giúp doanh nghiệp tạo ra ấn tượng chuyên nghiệp và đáng tin cậy trong mắt khách hàng. Từ logo, màu sắc đến font chữ, mọi yếu tố đều cần được thiết kế có chủ đích.\n\n## Chiến lược nội dung cho thương hiệu\n\nNội dung chất lượng là nền tảng để xây dựng mối quan hệ lâu dài với khách hàng. Hãy kể câu chuyện thương hiệu của bạn một cách chân thực và hấp dẫn."
         },
         {
-          "__component": "shared.slider",
-          "files": ["coffee-art.jpg", "coffee-beans.jpg"]
+          "__component": "shared.quote",
+          "title": "Jeff Bezos",
+          "body": "Thương hiệu của bạn là những gì người khác nói về bạn khi bạn không có mặt trong phòng."
         }
       ]
     },
     {
-      "title": "This shrimp is awesome",
-      "slug": "this-shrimp-is-awesome",
-      "category": {
-        "id": 4
-      },
-      "author": {
-        "id": 1
-      },
-      "description": "Mantis shrimps, or stomatopods, are marine crustaceans of the order Stomatopoda.",
+      "title": "Chiến lược truyền thông hiệu quả cho doanh nghiệp",
+      "slug": "chien-luoc-truyen-thong-doanh-nghiep",
+      "category": { "id": 3 },
+      "author": { "id": 1 },
+      "description": "Những chiến lược truyền thông phù hợp với ngân sách hạn chế nhưng vẫn đạt hiệu quả cao",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Probant \n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. \n\n## Abit sua\n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. "
+          "body": "## Tận dụng mạng xã hội miễn phí\n\nFacebook, Instagram, TikTok và YouTube đều cung cấp công cụ miễn phí giúp doanh nghiệp nhỏ tiếp cận khách hàng tiềm năng. Điều quan trọng là phải đăng tải nội dung đều đặn và có chất lượng.\n\n## Hợp tác với KOL/KOC địa phương\n\nThay vì chi nhiều tiền cho các influencer lớn, hãy tìm kiếm những người có ảnh hưởng trong cộng đồng địa phương."
+        },
+        { "__component": "shared.media", "file": "coffee-beans.jpg" }
+      ]
+    },
+    {
+      "title": "Bí quyết tổ chức sự kiện thành công trong kỷ nguyên mới",
+      "slug": "bi-quyet-to-chuc-su-kien-thanh-cong",
+      "category": { "id": 4 },
+      "author": { "id": 2 },
+      "description": "Những điều cần biết để tổ chức sự kiện chuyên nghiệp, ấn tượng và đáng nhớ",
+      "cover": null,
+      "blocks": [
+        {
+          "__component": "shared.rich-text",
+          "body": "## Lên kế hoạch chi tiết\n\nMột sự kiện thành công bắt đầu từ khâu lên kế hoạch kỹ lưỡng. Hãy xác định rõ mục tiêu, đối tượng khách mời, ngân sách và timeline trước ít nhất 3 tháng.\n\n## Kết hợp trải nghiệm trực tiếp và trực tuyến\n\nSự kiện hybrid đang trở thành xu hướng phổ biến. Đây là cách hiệu quả để tiếp cận nhiều khán giả hơn và giảm chi phí tổ chức."
         },
         {
           "__component": "shared.quote",
-          "title": "Thelonius Monk",
-          "body": "You've got to dig it to dig it, you dig?"
-        },
-        {
-          "__component": "shared.media",
-          "file": "coffee-art.jpg"
-        },
-        {
-          "__component": "shared.rich-text",
-          "body": "## Spatiantia astra \n\nFoeda, medio silva *errandum*: onus formam munere. Mutata bibulis est auxiliare arces etiamnunc verbis virgineo Priamidas illa Thescelus, nam fit locis lucis auras. Exitus hospes gratulor ut pondere [speslimite](http://www.curas.io/figuram); quid habent, Avernales faciente de. Pervenit Ino sonabile supplex cognoscenti vires, Bacchumque errat miserarum venandi dignabere dedisti. Discrimina iuncosaque virgaque tot sine superest [fissus](http://quos.org/sitet.aspx). Non color esset potest non sumit, sed vix arserat. Nisi immo silva tantum pectusque quos pennis quisquam artus!"
-        },
-        {
-          "__component": "shared.slider",
-          "files": ["coffee-art.jpg", "coffee-beans.jpg"]
+          "title": "Kinh nghiệm thực tế",
+          "body": "Sự kiện thành công không chỉ ở quy mô hoành tráng mà còn ở những chi tiết nhỏ tạo nên trải nghiệm đáng nhớ."
         }
       ]
     },
     {
-      "title": "A bug is becoming a meme on the internet",
-      "slug": "a-bug-is-becoming-a-meme-on-the-internet",
-      "category": {
-        "id": 2
-      },
-      "author": {
-        "id": 2
-      },
-      "description": "How a bug on MySQL is becoming a meme on the internet",
+      "title": "Quản lý kênh YouTube hiệu quả: Từ A đến Z",
+      "slug": "quan-ly-kenh-youtube-hieu-qua",
+      "category": { "id": 5 },
+      "author": { "id": 1 },
+      "description": "Hướng dẫn toàn diện về cách xây dựng và phát triển kênh YouTube từ con số không",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Probant \n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. \n\n## Abit sua\n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. "
+          "body": "## Tối ưu hóa SEO cho YouTube\n\nTiêu đề, mô tả và thẻ tag là những yếu tố quan trọng giúp video của bạn dễ tìm kiếm hơn. Hãy nghiên cứu từ khóa phù hợp với nội dung và đối tượng khán giả của bạn.\n\n## Lịch đăng tải đều đặn\n\nThuật toán YouTube ưu tiên các kênh có lịch đăng tải nhất quán. Hãy cam kết đăng ít nhất 1-2 video mỗi tuần."
         },
-        {
-          "__component": "shared.quote",
-          "title": "Thelonius Monk",
-          "body": "You've got to dig it to dig it, you dig?"
-        },
-        {
-          "__component": "shared.media",
-          "file": "coffee-art.jpg"
-        },
+        { "__component": "shared.media", "file": "beautiful-picture.jpg" },
         {
           "__component": "shared.rich-text",
-          "body": "## Spatiantia astra \n\nFoeda, medio silva *errandum*: onus formam munere. Mutata bibulis est auxiliare arces etiamnunc verbis virgineo Priamidas illa Thescelus, nam fit locis lucis auras. Exitus hospes gratulor ut pondere [speslimite](http://www.curas.io/figuram); quid habent, Avernales faciente de. Pervenit Ino sonabile supplex cognoscenti vires, Bacchumque errat miserarum venandi dignabere dedisti. Discrimina iuncosaque virgaque tot sine superest [fissus](http://quos.org/sitet.aspx). Non color esset potest non sumit, sed vix arserat. Nisi immo silva tantum pectusque quos pennis quisquam artus!"
-        },
-        {
-          "__component": "shared.slider",
-          "files": ["coffee-art.jpg", "coffee-beans.jpg"]
+          "body": "## Phân tích dữ liệu kênh\n\nYouTube Studio cung cấp đầy đủ công cụ phân tích giúp bạn hiểu rõ hơn về khán giả. Hãy dành thời gian mỗi tuần để đọc các báo cáo và điều chỉnh chiến lược phù hợp."
         }
       ]
     },
     {
-      "title": "Beautiful picture",
-      "slug": "beautiful-picture",
-      "category": {
-        "id": 4
-      },
-      "author": {
-        "id": 2
-      },
-      "description": "Description of a beautiful picture",
+      "title": "Xu hướng thiết kế đồ họa 2025: Màu sắc và Typography",
+      "slug": "xu-huong-thiet-ke-do-hoa-2025",
+      "category": { "id": 2 },
+      "author": { "id": 2 },
+      "description": "Cập nhật những xu hướng thiết kế đồ họa mới nhất đang định hình ngành sáng tạo năm 2025",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Probant \n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. \n\n## Abit sua\n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. "
-        },
-        {
-          "__component": "shared.quote",
-          "title": "Thelonius Monk",
-          "body": "You've got to dig it to dig it, you dig?"
-        },
-        {
-          "__component": "shared.media",
-          "file": "coffee-art.jpg"
-        },
-        {
-          "__component": "shared.rich-text",
-          "body": "## Spatiantia astra \n\nFoeda, medio silva *errandum*: onus formam munere. Mutata bibulis est auxiliare arces etiamnunc verbis virgineo Priamidas illa Thescelus, nam fit locis lucis auras. Exitus hospes gratulor ut pondere [speslimite](http://www.curas.io/figuram); quid habent, Avernales faciente de. Pervenit Ino sonabile supplex cognoscenti vires, Bacchumque errat miserarum venandi dignabere dedisti. Discrimina iuncosaque virgaque tot sine superest [fissus](http://quos.org/sitet.aspx). Non color esset potest non sumit, sed vix arserat. Nisi immo silva tantum pectusque quos pennis quisquam artus!"
+          "body": "## Màu sắc táo bạo và tương phản cao\n\nNăm 2025 chứng kiến sự trở lại của những bảng màu táo bạo, tương phản mạnh. Các thương hiệu không ngại sử dụng màu sắc rực rỡ để nổi bật giữa đám đông.\n\n## Typography có cá tính\n\nFont chữ handwriting và display đang trở thành lựa chọn hàng đầu cho các chiến dịch muốn truyền tải cảm xúc cá nhân và tính xác thực."
         },
         {
           "__component": "shared.slider",
-          "files": ["coffee-art.jpg", "coffee-beans.jpg"]
-        }
-      ]
-    },
-    {
-      "title": "What's inside a Black Hole",
-      "slug": "what-s-inside-a-black-hole",
-      "category": {
-        "id": 1
-      },
-      "author": {
-        "id": 2
-      },
-      "description": "Maybe the answer is in this article, or not...",
-      "cover": null,
-      "blocks": [
-        {
-          "__component": "shared.rich-text",
-          "body": "## Probant \n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. \n\n## Abit sua\n\nse Lorem markdownum negat. Argo *saxa* videnda cornuaque hunc qui tanta spes teneas! Obliquis est dicenti est salutat ille tamen iuvenum nostrae dolore. - Colores nocituraque comitata eripiunt - Addit quodcunque solum cui et dextram illis - Nulli meus nec extemplo ille ferebat pressit Se blandita fulvae vox gravem Pittheus cesserunt sanguine herbis tu comitum tenuit. Sui in ruunt; Doridaque maculosae fuissem! Et loqui. "
-        },
-        {
-          "__component": "shared.quote",
-          "title": "Thelonius Monk",
-          "body": "You've got to dig it to dig it, you dig?"
-        },
-        {
-          "__component": "shared.media",
-          "file": "coffee-art.jpg"
-        },
-        {
-          "__component": "shared.rich-text",
-          "body": "## Spatiantia astra \n\nFoeda, medio silva *errandum*: onus formam munere. Mutata bibulis est auxiliare arces etiamnunc verbis virgineo Priamidas illa Thescelus, nam fit locis lucis auras. Exitus hospes gratulor ut pondere [speslimite](http://www.curas.io/figuram); quid habent, Avernales faciente de. Pervenit Ino sonabile supplex cognoscenti vires, Bacchumque errat miserarum venandi dignabere dedisti. Discrimina iuncosaque virgaque tot sine superest [fissus](http://quos.org/sitet.aspx). Non color esset potest non sumit, sed vix arserat. Nisi immo silva tantum pectusque quos pennis quisquam artus!"
-        },
-        {
-          "__component": "shared.slider",
-          "files": ["coffee-art.jpg", "coffee-beans.jpg"]
+          "files": ["coffee-art.jpg", "coffee-shadow.jpg"]
         }
       ]
     }

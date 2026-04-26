@@ -168,7 +168,18 @@ async function updateBlocks(blocks) {
 
 async function importArticles() {
   for (const article of articles) {
-    const cover = await checkFileExistsBeforeUpload([`${article.slug}.jpg`]);
+    // Try cover by slug, fall back to default-image if not found, skip if cover is null
+    let cover = null;
+    if (article.cover !== null) {
+      const coverFileName = `${article.slug}.jpg`;
+      const coverPath = path.join('data', 'uploads', coverFileName);
+      if (fs.existsSync(coverPath)) {
+        cover = await checkFileExistsBeforeUpload([coverFileName]);
+      } else {
+        // Fall back to default image
+        cover = await checkFileExistsBeforeUpload(['default-image.png']);
+      }
+    }
     const updatedBlocks = await updateBlocks(article.blocks);
 
     await createEntry({

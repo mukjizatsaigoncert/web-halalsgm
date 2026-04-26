@@ -17,6 +17,9 @@ export default [
   'strapi::logger',
   'global::sentry',
   'strapi::errors',
+  // Redis response cache – runs early so cached responses bypass all downstream
+  // middleware. Set REDIS_CACHE_DISABLED=true to turn off without redeploying.
+  'global::redis-cache',
   {
     name: 'strapi::security',
     config: {

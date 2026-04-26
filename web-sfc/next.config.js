@@ -1,5 +1,13 @@
 const config = require("./src/config/config.json");
 
+// R2 public URL may be a custom domain (e.g. https://uploads.sfc.vn) or
+// the default R2.dev subdomain.  Extract hostname for remotePatterns.
+function r2Hostname() {
+  const url = process.env.R2_PUBLIC_URL;
+  if (!url) return null;
+  try { return new URL(url).hostname; } catch { return null; }
+}
+
 const securityHeaders = [
   {
     key: "Strict-Transport-Security",
@@ -45,18 +53,53 @@ const nextConfig = {
   transpilePackages: ["next-mdx-remote"],
   images: {
     remotePatterns: [
+      // Dev: Next.js image optimizer fetches from localhost:1337 (host-exposed port)
       {
         protocol: "http",
         hostname: "localhost",
         port: "1337",
         pathname: "/uploads/**",
       },
+      // Docker internal: rewrite proxy resolves to this
+      {
+        protocol: "http",
+        hostname: "backend",
+        port: "1337",
+        pathname: "/uploads/**",
+      },
+      // Production: absolute URLs built with NEXT_PUBLIC_STRAPI_URL = https://api.sfc.vn
+      {
+        protocol: "https",
+        hostname: "api.sfc.vn",
+        pathname: "/uploads/**",
+      },
+      // Cloudflare R2 custom domain (e.g. https://uploads.sfc.vn)
+      ...(r2Hostname()
+        ? [{ protocol: "https", hostname: r2Hostname(), pathname: "/**" }]
+        : []),
+      // Strapi Cloud CDN (if used)
       {
         protocol: "https",
         hostname: "creative-dance-2bde5b47f7.media.strapiapp.com",
         pathname: "/**",
       },
     ],
+  },
+  // Rewrite /uploads/* to Strapi backend so next/image optimizer can reach it
+  // server-side inside Docker (avoids localhost resolution failure in containers).
+  // Dev:  localhost:3001/uploads/x → frontend:3000/uploads/x → backend:1337/uploads/x
+  // Prod: sfc.vn/uploads/x        → frontend:3000/uploads/x → backend:1337/uploads/x
+  //   BUT in prod, browser image src is absolute https://api.sfc.vn/uploads/x (CDN),
+  //   so this rewrite is only used by the next/image optimizer — not the browser.
+  async rewrites() {
+    const strapiInternal =
+      process.env.STRAPI_INTERNAL_URL || "http://backend:1337";
+    return [
+      {
+        source: "/uploads/:path*",
+        destination: `${strapiInternal}/uploads/:path*`,
+      },
+    ];
   },
   async headers() {
     return [

@@ -1,4 +1,5 @@
 import { cleanRichText, sanitizeFields } from '../../../../utils/sanitize';
+import { vietnameseSlugify } from '../../../../utils/slugify';
 
 const sanitizeBlocks = (blocks: any[]) => {
   if (!Array.isArray(blocks)) return;
@@ -17,6 +18,13 @@ const sanitizeBlocks = (blocks: any[]) => {
 const applyAll = (data: any) => {
   if (!data) return;
   sanitizeFields(data, { plain: ['title', 'description'] });
+  // Always re-generate slug from title to ensure Vietnamese characters are correctly transliterated.
+  // This overrides whatever Strapi's built-in UID generator may have produced.
+  if (data.title) {
+    data.slug = vietnameseSlugify(data.title);
+  } else if (!data.slug) {
+    // fallback: if no title and no slug, leave as-is
+  }
   if (Array.isArray(data.blocks)) sanitizeBlocks(data.blocks);
 };
 

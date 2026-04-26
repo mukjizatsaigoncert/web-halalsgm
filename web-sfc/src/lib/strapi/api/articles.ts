@@ -1,8 +1,31 @@
 import { StrapiBlock } from "../model/block.model";
 
 // Strapi API utilities
+// NEXT_PUBLIC_STRAPI_URL: public-facing URL (browser + CDN), e.g. https://api.sfc.vn
 export const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+
+// STRAPI_INTERNAL_URL: Docker-internal URL for server-side fetch, e.g. http://backend:1337
+const STRAPI_FETCH_URL =
+  (typeof window === "undefined"
+    ? process.env.STRAPI_INTERNAL_URL
+    : undefined) ?? STRAPI_URL;
+
+/**
+ * Build image URL from a Strapi media url field.
+ *
+ * - Absolute URL (CDN, Strapi Cloud): used as-is
+ * - Relative path (/uploads/...): prepend STRAPI_URL so the browser fetches
+ *   directly from api.sfc.vn/uploads/ → Cloudflare CDN (30-day cache via nginx).
+ *   Next.js image optimiser running server-side uses the next.config.js rewrite
+ *   (/uploads/* → STRAPI_INTERNAL_URL) to reach the backend over Docker's
+ *   internal network without going through the public internet.
+ */
+export function buildStrapiImageUrl(url: string | undefined | null): string {
+  if (!url) return "/images/image-placeholder.png";
+  if (url.startsWith("http")) return url;
+  return `${STRAPI_URL}${url}`; // e.g. https://api.sfc.vn/uploads/xxx.jpg
+}
 
 // Interface cho media/image từ Strapi V5
 export interface StrapiMedia {
@@ -70,20 +93,11 @@ export interface StrapiResponse {
 
 // Chuyển đổi dữ liệu Strapi V5 sang format BlogPost
 export function transformStrapiArticle(article: StrapiArticle) {
-  let imageUrl = "/images/image-placeholder.png";
-
-  if (article.cover?.url) {
-    const coverUrl = article.cover.url;
-    imageUrl = coverUrl.startsWith("http")
-      ? coverUrl
-      : `${STRAPI_URL}${coverUrl}`;
-  }
-
   return {
     frontmatter: {
       title: article.title,
       description: article.description,
-      image: imageUrl,
+      image: buildStrapiImageUrl(article.cover?.url),
       date: article.publishedAt || article.createdAt,
       categories: article.category?.name ? [article.category.name] : [],
     },
@@ -97,7 +111,7 @@ export async function fetchFromStrapi<T = any>(
   endpoint: string,
   options?: RequestInit
 ): Promise<T> {
-  const fullUrl = `${STRAPI_URL}/api/${endpoint}`;
+  const fullUrl = `${STRAPI_FETCH_URL}/api/${endpoint}`;
   console.log("\n🔍 [Strapi Fetch] URL:", fullUrl);
 
   try {

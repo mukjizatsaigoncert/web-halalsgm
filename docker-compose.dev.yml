@@ -12,18 +12,26 @@ services:
     ports:
       - "5433:5432"
 
+  redis:
+    ports:
+      - "6379:6379"
+
   backend:
     ports:
       - "1337:1337"
     environment:
       NODE_ENV: development
       CORS_ORIGINS: "http://localhost:3001,http://127.0.0.1:3001"
+      # Disable Redis cache in dev if you prefer (remove or set to "false" to enable)
+      REDIS_CACHE_DISABLED: "false"
 
   frontend:
     ports:
       - "3001:3000"
     environment:
       NODE_ENV: development
+      # Server-side fetch uses internal Docker network name
+      STRAPI_INTERNAL_URL: "http://backend:1337"
 
   # Not needed in dev — stop it if it was started.
   nginx:

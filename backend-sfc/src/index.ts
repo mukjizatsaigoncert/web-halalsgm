@@ -1,5 +1,6 @@
 import type { Core } from '@strapi/strapi';
 import * as Sentry from '@sentry/node';
+import { flushApiCache } from './middlewares/redis-cache';
 
 function initSentry(strapi: Core.Strapi) {
   const dsn = process.env.SENTRY_DSN;
@@ -11,6 +12,32 @@ function initSentry(strapi: Core.Strapi) {
   });
   strapi.log.info('[bootstrap] Sentry initialised');
 }
+
+/**
+ * Content-type UIDs whose publish/update/delete events should flush the
+ * API response cache. Add new UIDs here as new content types are created.
+ */
+const CACHED_UIDS = [
+  'api::article.article',
+  'api::author.author',
+  'api::category.category',
+  'api::about.about',
+  'api::global.global',
+  'api::career.career',
+];
+
+function registerCacheInvalidation(strapi: Core.Strapi) {
+  for (const uid of CACHED_UIDS) {
+    strapi.db.lifecycles.subscribe({
+      models: [uid],
+      async afterCreate() { await flushApiCache(); },
+      async afterUpdate() { await flushApiCache(); },
+      async afterDelete() { await flushApiCache(); },
+    });
+  }
+  strapi.log.info('[bootstrap] Redis cache invalidation hooks registered');
+}
+
 
 /**
  * Permissions map applied to the `public` role on every boot.
@@ -109,5 +136,6 @@ export default {
     assertProductionSecrets(strapi);
     initSentry(strapi);
     await syncPublicPermissions(strapi);
+    registerCacheInvalidation(strapi);
   },
 };

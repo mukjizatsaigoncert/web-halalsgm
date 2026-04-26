@@ -22,6 +22,24 @@ services:
       retries: 5
     networks: [internal]
 
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: >
+      redis-server
+      --requirepass ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --save ""
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks: [internal]
+
   backend:
     build:
       context: ./backend-sfc
@@ -47,6 +65,9 @@ services:
       DATABASE_USERNAME: ${POSTGRES_USER:-sfc}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE_SSL: "false"
+      # --- Redis cache ---
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
+      REDIS_CACHE_TTL: ${REDIS_CACHE_TTL:-60}
       # --- Security ---
       CORS_ORIGINS: ${CORS_ORIGINS:-https://sfc.vn}
       RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY:-}
@@ -54,10 +75,18 @@ services:
       # --- Observability (optional) ---
       SENTRY_DSN: ${BACKEND_SENTRY_DSN:-}
       SENTRY_ENV: ${SENTRY_ENV:-production}
+      # --- Cloudflare R2 storage (optional — leave blank to use local disk) ---
+      R2_ACCOUNT_ID: ${R2_ACCOUNT_ID:-}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID:-}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY:-}
+      R2_BUCKET: ${R2_BUCKET:-sfc-uploads}
+      R2_PUBLIC_URL: ${R2_PUBLIC_URL:-}
     volumes:
       - strapi-uploads:/app/public/uploads
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:1337/api/health"]
@@ -80,6 +109,8 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3000
+      # Server-side fetch uses internal Docker network name
+      STRAPI_INTERNAL_URL: "http://backend:1337"
       # Sentry runtime options (only used if DSN is set).
       SENTRY_DSN: ${FRONTEND_SENTRY_DSN:-}
       SENTRY_ENV: ${SENTRY_ENV:-production}
@@ -114,6 +145,7 @@ volumes:
   postgres-data:
   strapi-uploads:
   nginx-cache:
+  redis-data:
 
 networks:
   # Internal services (db, backend) are not exposed to the host.

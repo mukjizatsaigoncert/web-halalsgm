@@ -3,7 +3,7 @@ import ImageFallback from "@/helpers/ImageFallback";
 import {
   fetchArticles,
   transformStrapiArticle,
-  STRAPI_URL,
+  buildStrapiImageUrl,
 } from "@/lib/strapi/api/articles";
 import { fetchAllCategories } from "@/lib/strapi/api/categories";
 import CallToAction from "@/partials/CallToAction";
@@ -296,10 +296,7 @@ export default async function Home() {
                   // Lấy ảnh từ cover, nếu không có thì dùng ảnh mặc định
                   let imageUrl = "/images/custom/anh1.jpg";
                   if (cat.cover?.url) {
-                    const coverUrl = cat.cover.url;
-                    imageUrl = coverUrl.startsWith("http")
-                      ? coverUrl
-                      : `${STRAPI_URL}${coverUrl}`;
+                    imageUrl = buildStrapiImageUrl(cat.cover.url);
                   }
                   return {
                     name: cat.name,
