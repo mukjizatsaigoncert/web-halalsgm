@@ -27,13 +27,14 @@ export function getRedisClient(): Redis | null {
     _redis = new Redis(url, {
       maxRetriesPerRequest: 1,
       connectTimeout: 3000,
-      lazyConnect: true,
       enableOfflineQueue: false,
+      retryStrategy: (times: number) => Math.min(times * 200, 5000),
     });
     _redis.on('error', (err: Error) => {
-      // Log but don't crash — app works without cache
       console.error('[redis-cache] connection error:', err.message);
     });
+    // Connect eagerly so the client is ready on first request
+    _redis.connect().catch(() => {/* ignore - retryStrategy handles reconnection */});
   }
   return _redis;
 }

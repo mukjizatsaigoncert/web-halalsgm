@@ -9,6 +9,9 @@ services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options: { max-size: "10m", max-file: "3" }
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-sfc}
       POSTGRES_USER: ${POSTGRES_USER:-sfc}
@@ -25,6 +28,9 @@ services:
   redis:
     image: redis:7-alpine
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options: { max-size: "5m", max-file: "3" }
     command: >
       redis-server
       --requirepass ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
@@ -45,6 +51,9 @@ services:
       context: ./backend-sfc
       dockerfile: Dockerfile
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options: { max-size: "20m", max-file: "5" }
     environment:
       NODE_ENV: production
       HOST: 0.0.0.0
@@ -75,6 +84,7 @@ services:
       # --- Observability (optional) ---
       SENTRY_DSN: ${BACKEND_SENTRY_DSN:-}
       SENTRY_ENV: ${SENTRY_ENV:-production}
+      METRICS_TOKEN: ${METRICS_TOKEN:-}
       # --- Cloudflare R2 storage (optional — leave blank to use local disk) ---
       R2_ACCOUNT_ID: ${R2_ACCOUNT_ID:-}
       R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID:-}
@@ -106,6 +116,9 @@ services:
         NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${NEXT_PUBLIC_RECAPTCHA_SITE_KEY:-}
         NEXT_PUBLIC_SENTRY_DSN: ${FRONTEND_SENTRY_DSN:-}
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options: { max-size: "20m", max-file: "5" }
     environment:
       NODE_ENV: production
       PORT: 3000
