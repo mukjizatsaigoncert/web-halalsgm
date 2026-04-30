@@ -6,10 +6,14 @@ export const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
 // STRAPI_INTERNAL_URL: Docker-internal URL for server-side fetch, e.g. http://backend:1337
-const STRAPI_FETCH_URL =
-  (typeof window === "undefined"
-    ? process.env.STRAPI_INTERNAL_URL
-    : undefined) ?? STRAPI_URL;
+// Must be a function (not a const) so process.env is read at request time,
+// not at module-init / build time when the env var is not yet injected.
+function getStrapiInternalUrl(): string {
+  if (typeof window === "undefined" && process.env.STRAPI_INTERNAL_URL) {
+    return process.env.STRAPI_INTERNAL_URL;
+  }
+  return STRAPI_URL;
+}
 
 /**
  * Build image URL from a Strapi media url field.
@@ -111,13 +115,15 @@ export async function fetchFromStrapi<T = any>(
   endpoint: string,
   options?: RequestInit
 ): Promise<T> {
-  const fullUrl = `${STRAPI_FETCH_URL}/api/${endpoint}`;
+  const fullUrl = `${getStrapiInternalUrl()}/api/${endpoint}`;
   console.log("\n🔍 [Strapi Fetch] URL:", fullUrl);
 
   try {
     const startTime = Date.now();
     const response = await fetch(fullUrl, {
-      next: { revalidate: 60 }, // Revalidate mỗi 60 giây
+      // Default: cache tag-based revalidation + time-based fallback (60s).
+      // Pass `options` last so callers can override tags/revalidate per call.
+      next: { revalidate: 60, tags: ['strapi-content'] },
       ...options,
     });
 

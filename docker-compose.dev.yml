@@ -32,6 +32,8 @@ services:
       NODE_ENV: development
       # Server-side fetch uses internal Docker network name
       STRAPI_INTERNAL_URL: "http://backend:1337"
+      # In dev you can set a fixed secret or leave a placeholder
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET:-dev-revalidate-secret}
 
   # Not needed in dev — stop it if it was started.
   nginx:
