@@ -50,6 +50,7 @@ services:
     build:
       context: ./backend-sfc
       dockerfile: Dockerfile
+    image: sfc-backend
     restart: unless-stopped
     logging:
       driver: "json-file"

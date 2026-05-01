@@ -37,11 +37,9 @@ services:
 
   # One-shot seed service: runs seed.js then exits.
   # Only runs on first boot (seed script checks initHasRun flag in DB).
+  # Reuses the already-built backend image — no separate build needed.
   seeder:
-    build:
-      context: ./backend-sfc
-      dockerfile: Dockerfile
-      target: runner
+    image: sfc-backend
     command: ["node", "scripts/seed.js"]
     environment:
       NODE_ENV: development
