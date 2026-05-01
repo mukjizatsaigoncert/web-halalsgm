@@ -46,6 +46,9 @@ COPY --from=build --chown=strapi:strapi /app/public ./public
 COPY --from=build --chown=strapi:strapi /app/favicon.png ./favicon.png
 COPY --from=build --chown=strapi:strapi /app/tsconfig.json ./tsconfig.json
 COPY --from=build --chown=strapi:strapi /app/types ./types
+# Seed script and sample data (needed for `npm run seed:example`)
+COPY --from=build --chown=strapi:strapi /app/scripts ./scripts
+COPY --from=build --chown=strapi:strapi /app/data ./data
 
 USER strapi
 EXPOSE 1337

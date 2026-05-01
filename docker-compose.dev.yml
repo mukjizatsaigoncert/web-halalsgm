@@ -35,6 +35,44 @@ services:
       # In dev you can set a fixed secret or leave a placeholder
       REVALIDATE_SECRET: ${REVALIDATE_SECRET:-dev-revalidate-secret}
 
+  # One-shot seed service: runs seed.js then exits.
+  # Only runs on first boot (seed script checks initHasRun flag in DB).
+  seeder:
+    build:
+      context: ./backend-sfc
+      dockerfile: Dockerfile
+      target: runner
+    command: ["node", "scripts/seed.js"]
+    environment:
+      NODE_ENV: development
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB:-sfc}
+      DATABASE_USERNAME: ${POSTGRES_USER:-sfc}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_SSL: "false"
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+    depends_on:
+      backend:
+        condition: service_healthy
+    volumes:
+      - strapi-uploads:/app/public/uploads
+    networks: [internal]
+    profiles: ["seed"]
+
   # Not needed in dev — stop it if it was started.
   nginx:
     profiles: ["never"]
+
+# Declare volumes used by dev-only services (seeder shares the backend uploads volume)
+volumes:
+  strapi-uploads:
+    external: true
+    name: sfc_strapi-uploads
+

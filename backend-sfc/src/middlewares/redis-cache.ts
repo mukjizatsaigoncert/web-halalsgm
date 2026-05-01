@@ -25,6 +25,7 @@ export function getRedisClient(): Redis | null {
 
   if (!_redis) {
     _redis = new Redis(url, {
+      lazyConnect: true, // We connect explicitly below to avoid double-connect
       maxRetriesPerRequest: 1,
       connectTimeout: 3000,
       enableOfflineQueue: false,
