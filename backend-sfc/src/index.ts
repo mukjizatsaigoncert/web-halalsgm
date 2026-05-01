@@ -27,6 +27,7 @@ const CACHED_UIDS = [
 ];
 
 function registerCacheInvalidation(strapi: Core.Strapi) {
+  // 1. DB-level lifecycles: catch bulk operations, unpublish via DB, etc.
   for (const uid of CACHED_UIDS) {
     strapi.db.lifecycles.subscribe({
       models: [uid],
@@ -35,7 +36,25 @@ function registerCacheInvalidation(strapi: Core.Strapi) {
       async afterDelete() { await flushApiCache(); },
     });
   }
-  strapi.log.info('[bootstrap] Redis cache invalidation hooks registered');
+
+  strapi.documents.use(async (context: any, next: () => Promise<any>) => {
+    const result = await next();
+
+    const invalidatingActions = ['publish', 'unpublish', 'discardDraft', 'create', 'update', 'delete'];
+    if (
+      invalidatingActions.includes(context.action) &&
+      CACHED_UIDS.includes(context.uid)
+    ) {
+      await flushApiCache();
+      strapi.log.debug(
+        `[cache] Flushed API cache after document.${context.action} on ${context.uid}`
+      );
+    }
+
+    return result;
+  });
+
+  strapi.log.info('[bootstrap] Redis cache invalidation hooks registered (DB + Document Service)');
 }
 
 
