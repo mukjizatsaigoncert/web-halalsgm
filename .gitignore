@@ -3,6 +3,9 @@
 .env.*
 !.env.example
 
+# ---- Node (root tooling: husky, lint-staged) ----
+node_modules/
+
 # ---- Local tooling ----
 .claude/
 .idea/

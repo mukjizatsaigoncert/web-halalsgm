@@ -142,7 +142,10 @@ services:
     networks: [internal, web]
 
   nginx:
-    image: fholzer/nginx-brotli:v1.27.0
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: sfc-nginx
     restart: unless-stopped
     ports:
       - "80:80"
