@@ -1,0 +1,52 @@
+name: Deploy Dev
+
+on:
+  push:
+    branches: [deploy-dev]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Service to deploy (backend | frontend | all)"
+        required: false
+        default: all
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: false   # never cancel a running deploy
+
+jobs:
+  deploy:
+    name: Deploy to Dev VPS
+    runs-on: ubuntu-latest
+    environment: dev            # optional: add required reviewers in GitHub settings
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEV_SSH_HOST }}
+          username: ${{ secrets.DEV_SSH_USER }}
+          key: ${{ secrets.DEV_SSH_KEY }}
+          port: ${{ secrets.DEV_SSH_PORT || 22 }}
+          script: |
+            set -euo pipefail
+            cd /opt/sfc
+
+            echo "=== git pull ==="
+            git fetch origin deploy-dev
+            git reset --hard origin/deploy-dev
+
+            echo "=== build & restart ==="
+            TARGET="${{ github.event.inputs.target || 'all' }}"
+            bash scripts/deploy-dev.sh "$TARGET"
+
+      - name: Notify success
+        if: success()
+        run: echo "✅ Dev deploy succeeded — $(date -u)"
+
+      - name: Notify failure
+        if: failure()
+        run: echo "❌ Dev deploy FAILED — check the logs above"
+
