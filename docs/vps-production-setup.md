@@ -36,28 +36,45 @@ docker compose version
 ## Bước 2 – Cài Fail2ban (chống brute-force SSH)
 
 ```bash
+# Cài fail2ban
 apt install fail2ban -y
 
-# Tạo config local
-cat > /etc/fail2ban/jail.local << 'EOF'
+# Nếu đã cài rồi, reinstall để restore file gốc (tránh jail.conf bị hỏng)
+apt-get install --reinstall fail2ban -y
+
+# Xoá jail.local cũ nếu có
+rm -f /etc/fail2ban/jail.local
+
+# Tạo jail.local bằng tee (tương thích hơn heredoc)
+tee /etc/fail2ban/jail.local > /dev/null << 'EOF'
 [DEFAULT]
-bantime  = 1h
+bantime = 1h
 findtime = 10m
 maxretry = 5
 
 [sshd]
 enabled = true
-port    = ssh
-logpath = %(sshd_log)s
-backend = %(syslog_backend)s
+backend = systemd
 EOF
 
-systemctl enable fail2ban
-systemctl start fail2ban
+# Kiểm tra file được tạo đúng
+cat /etc/fail2ban/jail.local
 
-# Kiểm tra
+# Bật và khởi động
+systemctl enable fail2ban
+systemctl restart fail2ban
+sleep 3
+
+# Kiểm tra status
+systemctl status fail2ban --no-pager
 fail2ban-client status sshd
 ```
+
+> **Nếu vẫn lỗi**, kiểm tra log:
+> ```bash
+> journalctl -u fail2ban -n 20 --no-pager
+> # Xem dòng lỗi cụ thể trong file nào
+> ```
 
 ---
 

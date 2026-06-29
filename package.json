@@ -1,0 +1,28 @@
+{
+  "name": "web-sfc-fe",
+  "version": "1.0.0",
+  "description": "Em ơi, đây là cẩm nang anh viết để em chạy được hệ thống SFC từ con số 0 — cả lúc chạy local để code lẫn lúc deploy lên server thật. Em cứ đọc tuần tự từ trên xuống là làm được, không cần biết devops trước.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mukjizatsaigoncert/web-sfc-fe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mukjizatsaigoncert/web-sfc-fe/issues"
+  },
+  "homepage": "https://github.com/mukjizatsaigoncert/web-sfc-fe#readme",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0"
+  }
+}

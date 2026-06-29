@@ -1,7 +1,9 @@
 # ---- Secrets ----
-.env
+.env-bk
 .env.*
 !.env.example
+package-lock.json
+.env
 
 # ---- Node (root tooling: husky, lint-staged) ----
 node_modules/
