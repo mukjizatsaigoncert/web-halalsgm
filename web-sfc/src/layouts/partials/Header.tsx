@@ -1,216 +1,80 @@
 "use client";
 
-import Button from "@/components/Button";
-import CalendarSidebar from "@/components/CalendarSidebar";
 import Logo from "@/components/Logo";
 import config from "@/config/config.json";
 import menu from "@/config/menu.json";
-import ImageFallback from "@/helpers/ImageFallback";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-export interface ChildNavigationLink {
+interface NavItem {
   name?: string;
   url?: string;
-  image?: string;
-  children?: ChildNavigationLink[];
-}
-
-export interface NavigationLink {
-  name?: string;
-  url?: string;
-  enable?: boolean;
-  hasMegamenu?: boolean;
-  image?: string;
   hasChildren?: boolean;
-  children?: ChildNavigationLink[];
+  children?: { name?: string; url?: string }[];
 }
 
-const { main }: { [key: string]: NavigationLink[] } = menu;
-const { navigation_button } = config;
+const { main }: { main: NavItem[] } = menu;
+const { navigation_button, params } = config;
 
 export default function Header() {
   const pathname = usePathname();
-  const [activeDropdown, setActiveDropdown] = React.useState<string | null>(
-    null
-  );
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const toggleDropdown = (menuName: string) => {
-    setActiveDropdown((prev) => (prev === menuName ? null : menuName));
-  };
-
-  // Function to close mobile menu
-  const closeMobileMenu = useCallback(() => {
-    const navToggle = document.getElementById("nav-toggle") as HTMLInputElement;
-    if (navToggle) {
-      navToggle.checked = false;
-    }
-    setActiveDropdown(null);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const closeMobile = useCallback(() => {
+    setMobileOpen(false);
+    setOpenDropdown(null);
+  }, []);
+
+  const isActive = (url?: string) =>
+    url === "/" ? pathname === "/" : pathname?.startsWith(url ?? "__");
+
   return (
-    <header className={`header fixed top-0 z-50 w-full`}>
-      <nav className="navbar container relative z-10">
-        {/* logo */}
-        <div className="order-0 lg:order-2 flex items-center">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-white shadow-md" : "bg-white"
+      }`}
+    >
+      <div className="container mx-auto px-4 xl:max-w-[1225px]">
+        <nav className="flex items-center justify-between h-16 lg:h-20">
+          {/* Logo */}
           <Logo />
-        </div>
-        {/* navbar toggler */}
-        <input id="nav-toggle" type="checkbox" className="hidden" />
-        <label
-          htmlFor="nav-toggle"
-          className="order-3 flex cursor-pointer items-center text-text lg:order-1 lg:hidden"
-        >
-          <svg
-            id="show-button"
-            className="block h-6 fill-current"
-            viewBox="0 0 20 20"
-          >
-            <title>Menu Open</title>
-            <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
-          </svg>
-          <svg
-            id="hide-button"
-            className="hidden h-6 fill-current"
-            viewBox="0 0 20 20"
-          >
-            <title>Menu Close</title>
-            <polygon
-              points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
-              transform="rotate(45 10 10)"
-            ></polygon>
-          </svg>
-        </label>
-        {/* /navbar toggler */}
-        <ul
-          id="nav-menu"
-          className="navbar-nav order-3 hidden pb-6 lg:order-1 lg:flex lg:w-auto lg:pb-0"
-        >
-          {main.map((menu) => (
-            <React.Fragment key={menu.url}>
-              {menu.hasMegamenu !== undefined && menu.name ? (
-                <li
-                  className={`nav-item nav-dropdown group ${!menu.hasMegamenu ? "relative" : ""} ${activeDropdown === menu.name ? "active" : ""}`}
-                >
+
+          {/* Nav links — desktop */}
+          <ul className="hidden lg:flex items-center gap-1">
+            {main.map((item) =>
+              item.hasChildren ? (
+                <li key={item.url} className="relative group">
                   <span
-                    className={`nav-link inline-flex items-center ${
-                      menu.children
-                        ?.map((subchild) =>
-                          subchild.children?.some(
-                            (child) =>
-                              pathname === child.url ||
-                              pathname === `${child.url}/`
-                          )
-                        )
-                        .includes(true)
-                        ? "active"
-                        : ""
+                    className={`flex items-center gap-1 px-4 py-2 text-sm font-medium cursor-pointer transition-colors hover:text-secondary ${
+                      item.children?.some((c) => isActive(c.url))
+                        ? "text-secondary"
+                        : "text-dark"
                     }`}
-                    onClick={() => toggleDropdown(menu.name || "")}
                   >
-                    {menu.name}
-                    <span className="arrow-icon">
-                      <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
-                    </span>
+                    {item.name}
+                    <svg className="w-3.5 h-3.5 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
                   </span>
-                  <div
-                    className={`mega-menu-wrapper max-lg:hidden max-lg:group-[.active]:flex max-lg:group-[.active]:flex-col lg:invisible lg:absolute lg:left-0 lg:flex ${menu.hasMegamenu ? "lg:items-center" : "lg:flex-col"} lg:opacity-0 lg:transition-all lg:duration-300 lg:group-hover:visible lg:group-hover:opacity-100 ${!menu.hasMegamenu ? " lg:p-4 lg:rounded-xl lg:border lg:border-border" : ""}`}
-                  >
-                    {menu.image && menu.hasMegamenu && (
-                      <div className="flex-shrink-0 mr-4">
-                        <ImageFallback
-                          src={menu.image}
-                          alt={"Preview"}
-                          className="aspect-square shadow max-lg:hidden"
-                          width={240}
-                          height={240}
-                        />
-                      </div>
-                    )}
-                    {menu.children?.map((subchild, index) => (
-                      <div
-                        key={index}
-                        className={`flex flex-col gap-5 ${!menu.hasMegamenu ? "w-full" : ""}`}
-                      >
-                        <ul
-                          className={`nav-dropdown-list ${
-                            menu.hasMegamenu
-                              ? "gap-x-8 sm:columns-2 md:columns-3 lg:grid lg:grid-cols-[repeat(3,_1fr)]"
-                              : "flex w-full h-full flex-col gap-2 lg:max-h-[400px] overflow-y-auto pr-2"
-                          }`}
-                        >
-                          {subchild.children?.map((child) => (
-                            <li className="nav-dropdown-item" key={child.url}>
-                              <Link
-                                href={
-                                  menu.url
-                                    ? `/${menu.url}/${child.url}`
-                                    : `${child.url}` || "#"
-                                }
-                                aria-label={child.name || "preview"}
-                                className={`nav-dropdown-link block ${
-                                  !menu.hasMegamenu
-                                    ? "py-2 px-3 hover:bg-secondary/5 rounded-lg whitespace-nowrap"
-                                    : ""
-                                } ${
-                                  pathname === `${child.url}/` ||
-                                  pathname === child.url
-                                    ? "active"
-                                    : ""
-                                }`}
-                                onClick={closeMobileMenu}
-                              >
-                                {child.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </li>
-              ) : menu.hasChildren && menu.name ? (
-                <li
-                  className={`nav-item nav-dropdown group relative ${activeDropdown === menu.name ? "active" : ""}`}
-                >
-                  <span
-                    className={`nav-link inline-flex items-center ${
-                      menu.children
-                        ?.map(({ url }) => url)
-                        .includes(pathname ?? "") ||
-                      menu.children
-                        ?.map(({ url }) => `${url}/`)
-                        .includes(pathname ?? "")
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() => toggleDropdown(menu.name || "")}
-                  >
-                    {menu.name}
-                    <span className="arrow-icon">
-                      <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
-                    </span>
-                  </span>
-                  <ul
-                    className={`nav-dropdown-list flex flex-col gap-1 rounded-xl border border-border bg-primary p-3 max-lg:mb-3 max-lg:hidden max-lg:w-[300px] max-lg:group-[.active]:flex max-lg:group-[.active]:flex-col lg:invisible lg:absolute lg:left-0 lg:flex lg:opacity-0 lg:transition-all lg:duration-300 lg:group-hover:visible lg:group-hover:opacity-100`}
-                  >
-                    {menu.children?.map((child, i) => (
-                      <li key={i} className={`nav-dropdown-item`}>
+                  {/* Dropdown */}
+                  <ul className="invisible group-hover:visible opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-1 min-w-[220px] bg-white border border-border rounded-xl shadow-lg py-2 transition-all duration-200 z-50">
+                    {item.children?.map((child) => (
+                      <li key={child.url}>
                         <Link
-                          href={child.url || "#"}
-                          aria-label={child.name}
-                          className={`nav-dropdown-link rounded-xl !px-4 !py-1.5 hover:bg-secondary/5 ${
-                            ((pathname === `${child.url}/` ||
-                              pathname === child.url) &&
-                              "active") ||
-                            ""
+                          href={child.url ?? "#"}
+                          onClick={closeMobile}
+                          className={`block px-4 py-2.5 text-sm transition-colors hover:bg-light hover:text-secondary ${
+                            isActive(child.url) ? "text-secondary font-medium" : "text-dark"
                           }`}
-                          onClick={closeMobileMenu}
                         >
                           {child.name}
                         </Link>
@@ -219,51 +83,125 @@ export default function Header() {
                   </ul>
                 </li>
               ) : (
-                menu.name && (
-                  <li className="nav-item">
-                    <Link
-                      href={menu.url || "#"}
-                      className={`nav-link block ${
-                        (pathname === `${menu.url}/` ||
-                          pathname === menu.url) &&
-                        "active"
-                      }`}
-                      onClick={closeMobileMenu}
-                    >
-                      {menu.name}
-                    </Link>
-                  </li>
-                )
-              )}
-            </React.Fragment>
-          ))}
-          {navigation_button.enable && (
-            <li className="mt-4 inline-block lg:hidden">
+                <li key={item.url}>
+                  <Link
+                    href={item.url ?? "#"}
+                    className={`block px-4 py-2 text-sm font-medium transition-colors hover:text-secondary ${
+                      isActive(item.url) ? "text-secondary" : "text-dark"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              )
+            )}
+          </ul>
+
+          {/* Right side — phone + CTA */}
+          <div className="hidden lg:flex items-center gap-4">
+            {params?.phone && (
+              <a
+                href={`tel:${params.phone.replace(/\s/g, "")}`}
+                className="flex items-center gap-2 text-sm font-medium text-dark hover:text-secondary transition-colors"
+              >
+                <svg className="w-4 h-4 text-secondary" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                </svg>
+                {params.phone}
+              </a>
+            )}
+            {navigation_button?.enable && (
               <Link
-                className="btn btn-primary btn-sm"
-                href={navigation_button.link}
-                onClick={closeMobileMenu}
+                href={navigation_button.link ?? "/lien-he"}
+                className="px-5 py-2.5 bg-secondary text-white text-sm font-semibold rounded-lg hover:bg-secondary/90 transition-colors"
               >
                 {navigation_button.label}
               </Link>
-            </li>
-          )}
-        </ul>
-
-        <div className="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
-          <div className="hidden lg:flex items-center">
-            <Button
-              enable={navigation_button.enable}
-              link={navigation_button.link}
-              label={navigation_button.label}
-              showIcon={false}
-            />
+            )}
           </div>
-        </div>
-      </nav>
 
-      {/* Calendar Bar */}
-      <CalendarSidebar />
+          {/* Hamburger — mobile */}
+          <button
+            className="lg:hidden flex flex-col gap-1.5 p-2"
+            aria-label="Toggle menu"
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            <span className={`block w-6 h-0.5 bg-dark transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-6 h-0.5 bg-dark transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-6 h-0.5 bg-dark transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
+        </nav>
+      </div>
+
+      {/* Mobile menu */}
+      <div
+        className={`lg:hidden overflow-hidden transition-all duration-300 bg-white border-t border-border ${
+          mobileOpen ? "max-h-screen py-4" : "max-h-0"
+        }`}
+      >
+        <ul className="container mx-auto px-4 xl:max-w-[1225px] flex flex-col gap-1">
+          {main.map((item) =>
+            item.hasChildren ? (
+              <li key={item.url}>
+                <button
+                  className="w-full flex items-center justify-between px-3 py-3 text-sm font-medium text-dark hover:text-secondary transition-colors"
+                  onClick={() =>
+                    setOpenDropdown((p) => (p === item.url ? null : (item.url ?? null)))
+                  }
+                >
+                  {item.name}
+                  <svg
+                    className={`w-4 h-4 transition-transform ${openDropdown === item.url ? "rotate-180" : ""}`}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                  </svg>
+                </button>
+                {openDropdown === item.url && (
+                  <ul className="pl-4 flex flex-col gap-1 pb-2">
+                    {item.children?.map((child) => (
+                      <li key={child.url}>
+                        <Link
+                          href={child.url ?? "#"}
+                          onClick={closeMobile}
+                          className={`block px-3 py-2 text-sm transition-colors hover:text-secondary ${
+                            isActive(child.url) ? "text-secondary font-medium" : "text-text"
+                          }`}
+                        >
+                          {child.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ) : (
+              <li key={item.url}>
+                <Link
+                  href={item.url ?? "#"}
+                  onClick={closeMobile}
+                  className={`block px-3 py-3 text-sm font-medium transition-colors hover:text-secondary ${
+                    isActive(item.url) ? "text-secondary" : "text-dark"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            )
+          )}
+          {/* Mobile CTA */}
+          <li className="pt-3 border-t border-border mt-2">
+            <Link
+              href={navigation_button?.link ?? "/lien-he"}
+              onClick={closeMobile}
+              className="block w-full text-center px-5 py-3 bg-secondary text-white text-sm font-semibold rounded-lg"
+            >
+              {navigation_button?.label ?? "Liên hệ"}
+            </Link>
+          </li>
+        </ul>
+      </div>
     </header>
   );
 }

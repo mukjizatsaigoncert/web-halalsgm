@@ -1,60 +1,8 @@
 {
   "main": [
     {
-      "name": "Tất cả",
-      "url": "",
-      "hasMegamenu": true,
-      "image": "/images/custom/mega-menu.jpg",
-      "children": [
-        {
-          "children": [
-            {
-              "name": "Trang chủ",
-              "url": "/"
-            },
-            {
-              "name": "Giới thiệu",
-              "url": "/gioi-thieu"
-            },
-            {
-              "name": "Tuyển dụng",
-              "url": "/tuyen-dung"
-            },
-            {
-              "name": "Liên hệ",
-              "url": "/lien-he"
-            },
-            {
-              "name": "Tin tức",
-              "url": "/tin-tuc"
-            },
-            {
-              "name": "Lịch vạn niên",
-              "url": "/lich-van-nien"
-            },
-            {
-              "name": "Tổ chức sự kiện",
-              "url": "/linh-vuc-hoat-dong/to-chuc-su-kien"
-            },
-            {
-              "name": "Thiết kế thương hiệu",
-              "url": "/linh-vuc-hoat-dong/thiet-ke-thuong-hieu"
-            },
-            {
-              "name": "Sản xuất video",
-              "url": "/linh-vuc-hoat-dong/san-xuat-video"
-            },
-            {
-              "name": "Quản lý kênh truyền thông",
-              "url": "/linh-vuc-hoat-dong/quan-ly-kenh-truyen-thong"
-            },
-            {
-              "name": "Truyền thông",
-              "url": "/linh-vuc-hoat-dong/truyen-thong"
-            }
-          ]
-        }
-      ]
+      "name": "Trang chủ",
+      "url": "/"
     },
     {
       "name": "Giới thiệu",
@@ -62,73 +10,45 @@
     },
     {
       "name": "Lĩnh vực hoạt động",
-      "url": "linh-vuc-hoat-dong",
-      "hasMegamenu": false,
+      "url": "/linh-vuc-hoat-dong",
+      "hasChildren": true,
       "children": [
-        {
-          "children": [
-            {
-              "name": "Tổ chức sự kiện",
-              "url": "/to-chuc-su-kien"
-            },
-            {
-              "name": "Thiết kế thương hiệu",
-              "url": "/thiet-ke-thuong-hieu"
-            },
-            {
-              "name": "Sản xuất video",
-              "url": "/san-xuat-video"
-            },
-            {
-              "name": "Quản lý kênh truyền thông",
-              "url": "/quan-ly-kenh-truyen-thong"
-            },
-            {
-              "name": "Truyền thông",
-              "url": "/truyen-thong"
-            }
-          ]
-        }
+        { "name": "Tổ chức sự kiện", "url": "/linh-vuc-hoat-dong/to-chuc-su-kien" },
+        { "name": "Sản xuất video", "url": "/linh-vuc-hoat-dong/san-xuat-video" },
+        { "name": "Thiết kế thương hiệu", "url": "/linh-vuc-hoat-dong/thiet-ke-thuong-hieu" },
+        { "name": "Quản lý kênh truyền thông", "url": "/linh-vuc-hoat-dong/quan-ly-kenh-truyen-thong" },
+        { "name": "Truyền thông", "url": "/linh-vuc-hoat-dong/truyen-thong" }
       ]
+    },
+    {
+      "name": "Tin tức",
+      "url": "/tin-tuc"
+    },
+    {
+      "name": "Tuyển dụng",
+      "url": "/tuyen-dung"
+    },
+    {
+      "name": "Liên hệ",
+      "url": "/lien-he"
     }
   ],
   "footer": [
     {
-      "title": "Quick Links",
+      "title": "Liên kết nhanh",
       "children": [
-        {
-          "name": "Projects",
-          "url": "/projects"
-        },
-        {
-          "name": "About Us",
-          "url": "/about"
-        },
-        {
-          "name": "Contact",
-          "url": "/contact"
-        },
-        {
-          "name": "Career",
-          "url": "/career"
-        }
+        { "name": "Giới thiệu", "url": "/gioi-thieu" },
+        { "name": "Lĩnh vực hoạt động", "url": "/linh-vuc-hoat-dong" },
+        { "name": "Tin tức", "url": "/tin-tuc" },
+        { "name": "Tuyển dụng", "url": "/tuyen-dung" },
+        { "name": "Liên hệ", "url": "/lien-he" }
       ]
     },
     {
-      "title": "Legal & Policy Links",
+      "title": "Chính sách",
       "children": [
-        {
-          "name": "Privacy Policy",
-          "url": "/privacy-policy"
-        },
-        {
-          "name": "Terms of Service",
-          "url": "/terms-and-conditions"
-        },
-        {
-          "name": "Contact Us",
-          "url": "/contact"
-        }
+        { "name": "Chính sách bảo mật", "url": "/chinh-sach-bao-mat" },
+        { "name": "Điều khoản dịch vụ", "url": "/dieu-khoan-dich-vu" }
       ]
     }
   ]

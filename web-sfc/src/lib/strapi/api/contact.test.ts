@@ -21,7 +21,7 @@ describe("submitContact", () => {
       ok: true,
       json: async () => ({ data: { id: 42, documentId: "x" } }),
     });
-    // @ts-expect-error — partial Response is fine for the test
+
     global.fetch = mock;
 
     const res = await submitContact(FORM);
@@ -42,7 +42,7 @@ describe("submitContact", () => {
       ok: true,
       json: async () => ({ data: { id: 1, documentId: "x" } }),
     });
-    // @ts-expect-error — partial Response is fine for the test
+
     global.fetch = mock;
 
     await submitContact(FORM, "captcha-abc");
@@ -55,7 +55,7 @@ describe("submitContact", () => {
       ok: true,
       json: async () => ({ data: { id: 1, documentId: "x" } }),
     });
-    // @ts-expect-error — partial Response is fine for the test
+
     global.fetch = mock;
 
     await submitContact(FORM);
@@ -64,7 +64,7 @@ describe("submitContact", () => {
   });
 
   it("returns error payload from Strapi on non-2xx", async () => {
-    // @ts-expect-error — partial Response is fine for the test
+
     global.fetch = jest.fn().mockResolvedValue({
       ok: false,
       json: async () => ({

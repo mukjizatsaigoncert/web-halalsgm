@@ -2,23 +2,23 @@
   "colors": {
     "default": {
       "theme_color": {
-        "primary": "#004643",
-        "secondary": "#FAF4D3",
+        "primary": "#1A1A1A",
+        "secondary": "#E85C0D",
         "body": "#fff",
-        "border": "#eaeaea",
-        "light": "#E9E9E9",
-        "dark": "#040404"
+        "border": "#e5e5e5",
+        "light": "#F5F5F5",
+        "dark": "#0A0A0A"
       },
       "text_color": {
-        "text": "#525b5bd9",
-        "text-dark": "#040404",
+        "text": "#4B4B4B",
+        "text-dark": "#1A1A1A",
         "text-light": "#f8f9fa"
       }
     }
   },
   "fonts": {
     "font_family": {
-      "primary": "Be Vietnam Pro:wght@400;500;600;700",
+      "primary": "Archivo:wght@400;500;600;700",
       "primary_type": "sans-serif"
     },
     "font_size": { "base": "16", "scale": "1.25" }

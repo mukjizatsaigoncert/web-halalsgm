@@ -8,8 +8,8 @@ import {
 import { fetchAllCategories } from "@/lib/strapi/api/categories";
 import CallToAction from "@/partials/CallToAction";
 import SeoMeta from "@/partials/SeoMeta";
+import HeroSlider from "@/partials/HeroSlider";
 import Link from "next/link";
-import AnimatedStats from "@/layouts/partials/AnimatedStats";
 import AnimatedNumber from "@/layouts/partials/AnimatedNumber";
 
 // Revalidate mỗi 60 giây
@@ -123,64 +123,36 @@ export default async function Home() {
         description={companyInfo.description}
       />
 
-      {/* Hero Banner */}
-      <section className="relative min-h-fit md:min-h-[85vh] flex items-center overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <ImageFallback
-            src="/images/custom/anh1.jpg"
-            fill
-            alt="Banner"
-            className="object-cover"
-            priority
-          />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-linear-to-r from-primary/85 via-primary/60 to-primary/30" />
-        </div>
-
-        <div className="container relative z-10 pt-48 md:pt-52 pb-8 md:pb-20">
-          <div className="row items-center">
-            <div className="col-12 lg:col-8 xl:col-7">
-              <div className="inline-block bg-secondary/20 backdrop-blur-sm border border-secondary/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-4 md:mb-6">
-                <p
-                  data-aos="fade-up-sm"
-                  className="text-secondary font-semibold uppercase tracking-wider text-xs md:text-sm"
-                >
-                  ✨ {companyInfo.slogan}
-                </p>
-              </div>
-              <h1
-                data-aos="fade-up-sm"
-                data-aos-delay="100"
-                className="text-3xl md:text-5xl lg:text-6xl xl:text-6xl font-bold mb-4 md:mb-6 leading-tight text-white drop-shadow-lg"
-              >
-                {companyInfo.name}
-              </h1>
-              <div data-aos="fade-up-sm" data-aos-delay="200">
-                <Link
-                  href="/gioi-thieu"
-                  className="btn btn-secondary px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-105"
-                >
-                  Tìm Hiểu Thêm
-                </Link>
-              </div>
-
-              {/* Stats mini */}
-              <AnimatedStats
-                stats={[
-                  { number: "15+", label: "Năm Kinh Nghiệm" },
-                  { number: "500+", label: "Dự Án Thành Công" },
-                  { number: "100+", label: "Khách Hàng" },
-                ]}
-                className="flex gap-4 md:gap-8 mt-8 md:mt-12 pt-6 md:pt-8 border-t border-white/20"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Decorative elements */}
-        <div className="absolute bottom-0 left-0 right-0 h-28 bg-linear-to-t from-white/70 to-transparent" />
-      </section>
+      {/* Hero Slider */}
+      <HeroSlider
+        slides={[
+          {
+            image: "/images/custom/anh1.jpg",
+            tag: companyInfo.slogan,
+            heading: companyInfo.name,
+            subheading: companyInfo.description,
+          },
+          {
+            image: "/images/custom/anh2.jpg",
+            tag: "Chuyên nghiệp & Sáng tạo",
+            heading: "Giải pháp truyền thông toàn diện",
+            subheading: "Từ sản xuất video, tổ chức sự kiện đến quản lý thương hiệu.",
+          },
+          {
+            image: "/images/custom/anh3.jpg",
+            tag: "Đối tác tin cậy",
+            heading: "Đồng hành cùng doanh nghiệp của bạn",
+            subheading: "Hơn 15 năm kinh nghiệm trong ngành truyền thông và sự kiện.",
+          },
+        ]}
+        stats={[
+          { end: 15, suffix: "+", label: "Năm kinh nghiệm" },
+          { end: 500, suffix: "+", label: "Dự án thành công" },
+          { end: 100, suffix: "+", label: "Khách hàng tin tưởng" },
+        ]}
+        ctaLabel="Liên hệ ngay"
+        ctaLink="/lien-he"
+      />
 
       {/* Giới thiệu */}
       <section className="py-20 md:py-28 bg-linear-to-b from-white to-slate-50">

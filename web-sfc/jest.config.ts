@@ -1,8 +1,6 @@
 import type { Config } from "jest";
 import nextJest from "next/jest.js";
 
-// Uses Next.js's Jest preset, which handles swc transform + CSS mocks +
-// image/env resolution in the same way `next dev` does.
 const createJestConfig = nextJest({ dir: "./" });
 
 const config: Config = {
@@ -38,4 +36,14 @@ const config: Config = {
   },
 };
 
-export default createJestConfig(config);
+// Async wrapper so we can override transformIgnorePatterns AFTER
+// next/jest sets its own (which ignores all of node_modules by default).
+// github-slugger v2+ is ESM-only and needs to be transformed by SWC.
+export default async () => {
+  const jestConfig = await createJestConfig(config)();
+  jestConfig.transformIgnorePatterns = [
+    "/node_modules/(?!(github-slugger|marked)/)",
+    "^.+\\.module\\.(css|sass|scss)$",
+  ];
+  return jestConfig;
+};
