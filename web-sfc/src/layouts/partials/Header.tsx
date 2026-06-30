@@ -44,36 +44,36 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto px-4 xl:max-w-[1225px]">
-        <nav className="flex items-center justify-between h-16 lg:h-20">
+        <nav className="flex items-center justify-between h-16">
           {/* Logo */}
           <Logo />
 
           {/* Nav links — desktop */}
-          <ul className="hidden lg:flex items-center gap-1">
+          <ul className="hidden lg:flex items-center gap-0.5">
             {main.map((item) =>
               item.hasChildren ? (
                 <li key={item.url} className="relative group">
                   <span
-                    className={`flex items-center gap-1 px-4 py-2 text-sm font-medium cursor-pointer transition-colors hover:text-secondary ${
+                    className={`flex items-center gap-1 px-3 py-2 text-[15px] font-medium cursor-pointer transition-colors hover:text-secondary ${
                       item.children?.some((c) => isActive(c.url))
                         ? "text-secondary"
                         : "text-dark"
                     }`}
                   >
                     {item.name}
-                    <svg className="w-3.5 h-3.5 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    <svg className="w-3 h-3 mt-0.5 flex-shrink-0" viewBox="0 0 128 128" fill="currentColor">
+                      <path d="m64 88c-1.023 0-2.047-.391-2.828-1.172l-40-40c-1.563-1.563-1.563-4.094 0-5.656s4.094-1.563 5.656 0l37.172 37.172 37.172-37.172c1.563-1.563 4.094-1.563 5.656 0s1.563 4.094 0 5.656l-40 40c-.781.781-1.805 1.172-2.828 1.172z" />
                     </svg>
                   </span>
                   {/* Dropdown */}
-                  <ul className="invisible group-hover:visible opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-1 min-w-[220px] bg-white border border-border rounded-xl shadow-lg py-2 transition-all duration-200 z-50">
+                  <ul className="invisible group-hover:visible opacity-0 group-hover:opacity-100 absolute top-full left-0 mt-1 min-w-[200px] bg-white border border-border rounded-xl shadow-lg py-2 transition-all duration-200 z-50">
                     {item.children?.map((child) => (
                       <li key={child.url}>
                         <Link
                           href={child.url ?? "#"}
                           onClick={closeMobile}
-                          className={`block px-4 py-2.5 text-sm transition-colors hover:bg-light hover:text-secondary ${
-                            isActive(child.url) ? "text-secondary font-medium" : "text-dark"
+                          className={`block px-4 py-2.5 text-[14px] transition-colors hover:text-secondary ${
+                            isActive(child.url) ? "text-secondary font-semibold" : "text-dark"
                           }`}
                         >
                           {child.name}
@@ -86,7 +86,7 @@ export default function Header() {
                 <li key={item.url}>
                   <Link
                     href={item.url ?? "#"}
-                    className={`block px-4 py-2 text-sm font-medium transition-colors hover:text-secondary ${
+                    className={`block px-3 py-2 text-[15px] font-medium transition-colors hover:text-secondary ${
                       isActive(item.url) ? "text-secondary" : "text-dark"
                     }`}
                   >
@@ -113,11 +113,21 @@ export default function Header() {
             {navigation_button?.enable && (
               <Link
                 href={navigation_button.link ?? "/lien-he"}
-                className="px-5 py-2.5 bg-secondary text-white text-sm font-semibold rounded-lg hover:bg-secondary/90 transition-colors"
+                className="px-5 py-2.5 bg-secondary text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
               >
                 {navigation_button.label}
               </Link>
             )}
+            {/* Search icon */}
+            <button
+              aria-label="Tìm kiếm"
+              className="w-9 h-9 flex items-center justify-center text-dark hover:text-secondary transition-colors"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+            </button>
           </div>
 
           {/* Hamburger — mobile */}
