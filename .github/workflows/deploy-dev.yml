@@ -32,7 +32,7 @@ jobs:
           port: ${{ secrets.DEV_SSH_PORT || 22 }}
           script: |
             set -euo pipefail
-            cd /opt/sfc
+            cd /opt/halal
 
             echo "=== git pull ==="
             git fetch origin deploy-dev

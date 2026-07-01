@@ -1,6 +1,6 @@
 const config = require("./src/config/config.json");
 
-// R2 public URL may be a custom domain (e.g. https://uploads.sfc.vn) or
+// R2 public URL may be a custom domain (e.g. https://uploads.halalsgm.vn) or
 // the default R2.dev subdomain.  Extract hostname for remotePatterns.
 function r2Hostname() {
   const url = process.env.R2_PUBLIC_URL;
@@ -51,6 +51,12 @@ const nextConfig = {
   output: "standalone",
   poweredByHeader: false,
   transpilePackages: ["next-mdx-remote"],
+  // jsdom (pulled in by isomorphic-dompurify) ships a default-stylesheet.css
+  // asset it reads via a relative require at runtime. Webpack's RSC bundler
+  // rewrites that into .next/browser/*, which doesn't exist server-side and
+  // crashes every page that renders humanize()/markdownify() (textConverter.ts).
+  // Marking it external makes Next require it natively from node_modules instead.
+  serverExternalPackages: ["jsdom", "isomorphic-dompurify"],
   images: {
     remotePatterns: [
       // Dev: Next.js image optimizer fetches from localhost:1337 (host-exposed port)
@@ -67,13 +73,13 @@ const nextConfig = {
         port: "1337",
         pathname: "/uploads/**",
       },
-      // Production: absolute URLs built with NEXT_PUBLIC_STRAPI_URL = https://api.sfc.vn
+      // Production: absolute URLs built with NEXT_PUBLIC_STRAPI_URL = https://api.halalsgm.vn
       {
         protocol: "https",
-        hostname: "api.sfc.vn",
+        hostname: "api.halalsgm.vn",
         pathname: "/uploads/**",
       },
-      // Cloudflare R2 custom domain (e.g. https://uploads.sfc.vn)
+      // Cloudflare R2 custom domain (e.g. https://uploads.halalsgm.vn)
       ...(r2Hostname()
         ? [{ protocol: "https", hostname: r2Hostname(), pathname: "/**" }]
         : []),
@@ -88,8 +94,8 @@ const nextConfig = {
   // Rewrite /uploads/* to Strapi backend so next/image optimizer can reach it
   // server-side inside Docker (avoids localhost resolution failure in containers).
   // Dev:  localhost:3001/uploads/x → frontend:3000/uploads/x → backend:1337/uploads/x
-  // Prod: sfc.vn/uploads/x        → frontend:3000/uploads/x → backend:1337/uploads/x
-  //   BUT in prod, browser image src is absolute https://api.sfc.vn/uploads/x (CDN),
+  // Prod: halalsgm.vn/uploads/x        → frontend:3000/uploads/x → backend:1337/uploads/x
+  //   BUT in prod, browser image src is absolute https://api.halalsgm.vn/uploads/x (CDN),
   //   so this rewrite is only used by the next/image optimizer — not the browser.
   async rewrites() {
     const strapiInternal =

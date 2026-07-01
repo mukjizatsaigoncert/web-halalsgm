@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================
-# monitor.sh — Quick health & metrics snapshot for the SFC stack
+# monitor.sh — Quick health & metrics snapshot for the Halal stack
 #
 # Usage:
 #   ./scripts/monitor.sh           # full report
@@ -31,7 +31,7 @@ MODE="${1:-all}"
 show_containers() {
   hdr "🐳 Docker Containers"
   docker compose ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null || \
-  docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep sfc
+  docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep halal
 }
 
 # ── Health endpoints ──────────────────────────────────────────────────────────
@@ -99,17 +99,17 @@ print(f\"  DB connections: {db.get('active_connections','?')}\")
 # ── Redis direct ──────────────────────────────────────────────────────────────
 show_redis() {
   hdr "🔴 Redis Direct Stats"
-  if ! docker exec sfc-redis-1 redis-cli -a "${REDIS_PASSWORD:-}" ping &>/dev/null; then
+  if ! docker exec halal-redis-1 redis-cli -a "${REDIS_PASSWORD:-}" ping &>/dev/null; then
     fail "Redis not reachable"; return
   fi
-  docker exec sfc-redis-1 redis-cli -a "${REDIS_PASSWORD:-}" info stats 2>/dev/null | \
+  docker exec halal-redis-1 redis-cli -a "${REDIS_PASSWORD:-}" info stats 2>/dev/null | \
     grep -E "keyspace_hits|keyspace_misses|total_commands_processed|expired_keys|evicted_keys" | \
     while IFS=: read key val; do
       printf "  %-32s %s\n" "$key" "$(echo $val | tr -d '\r')"
     done
   echo ""
   echo "  Cached API keys:"
-  docker exec sfc-redis-1 redis-cli -a "${REDIS_PASSWORD:-}" \
+  docker exec halal-redis-1 redis-cli -a "${REDIS_PASSWORD:-}" \
     --scan --pattern "strapi:api:*" 2>/dev/null | wc -l | xargs printf "  %-32s %s\n" "  count"
 }
 
@@ -118,13 +118,13 @@ show_resources() {
   hdr "💻 Resource Usage"
   docker stats --no-stream --format \
     "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}\t{{.NetIO}}" \
-    2>/dev/null | grep -E "NAME|sfc-"
+    2>/dev/null | grep -E "NAME|halal-"
 }
 
 # ── Nginx cache stats ─────────────────────────────────────────────────────────
 show_nginx() {
   hdr "🌐 Nginx (last 100 requests)"
-  docker exec sfc-nginx-1 tail -100 /var/log/nginx/access.log 2>/dev/null | \
+  docker exec halal-nginx-1 tail -100 /var/log/nginx/access.log 2>/dev/null | \
     awk '{
       if ($0 ~ "HIT") hits++
       else if ($0 ~ "MISS") misses++
@@ -149,7 +149,7 @@ show_disk() {
   hdr "💾 Disk & Volumes"
   df -h / | tail -1 | awk '{printf "  Disk: used=%s / total=%s (%s used)\n", $3, $2, $5}'
   echo ""
-  docker volume ls --format "{{.Name}}" | grep sfc | while read vol; do
+  docker volume ls --format "{{.Name}}" | grep halal | while read vol; do
     size=$(docker run --rm -v "$vol":/data alpine du -sh /data 2>/dev/null | cut -f1)
     printf "  %-30s %s\n" "$vol" "$size"
   done

@@ -93,7 +93,7 @@ cp .env.example .env
 
 ```bash
 # Generate tất cả secrets
-cd backend-sfc
+cd backend-halal
 bash scripts/generate-secrets.sh   # copy output vào .env
 
 # Hoặc generate từng cái
@@ -124,10 +124,10 @@ apt install certbot -y
 
 # Cấp cert (thay domain thật)
 certbot certonly --standalone \
-  -d sfc.vn \
-  -d www.sfc.vn \
-  -d api.sfc.vn \
-  --email admin@sfc.vn \
+  -d halalsgm.vn \
+  -d www.halalsgm.vn \
+  -d api.halalsgm.vn \
+  --email admin@halalsgm.vn \
   --agree-tos \
   --non-interactive
 
@@ -172,11 +172,11 @@ curl http://localhost:3000/api/health
 
 Sau khi deploy, vào Strapi Admin:
 
-1. Truy cập: `https://api.sfc.vn/admin`
+1. Truy cập: `https://api.halalsgm.vn/admin`
 2. Vào **Settings → Webhooks → Create new webhook**
 3. Điền:
    - **Name**: `Next.js Revalidate`
-   - **URL**: `https://sfc.vn/api/revalidate`
+   - **URL**: `https://halalsgm.vn/api/revalidate`
    - **Headers**: `Authorization: Bearer <REVALIDATE_SECRET>` (giá trị trong .env)
 4. Tích chọn **Events**:
    - ✅ Entry: `create`, `update`, `delete`, `publish`, `unpublish`
@@ -193,20 +193,20 @@ Sau khi deploy, vào Strapi Admin:
 cat /root/web-sfc-fe/scripts/backup-postgres.sh
 
 # Tạo thư mục backup
-mkdir -p /var/backups/sfc-postgres
+mkdir -p /var/backups/halal-postgres
 
 # Thêm cronjob backup lúc 2h sáng hàng ngày
 crontab -e
 ```
 Thêm dòng:
 ```
-0 2 * * * /root/web-sfc-fe/scripts/backup-postgres.sh >> /var/log/sfc-backup.log 2>&1
+0 2 * * * /root/web-sfc-fe/scripts/backup-postgres.sh >> /var/log/halal-backup.log 2>&1
 ```
 
 Kiểm tra backup chạy được:
 ```bash
 bash /root/web-sfc-fe/scripts/backup-postgres.sh
-ls -la /var/backups/sfc-postgres/
+ls -la /var/backups/halal-postgres/
 ```
 
 ---
@@ -216,8 +216,8 @@ ls -la /var/backups/sfc-postgres/
 ### UptimeRobot (khuyến nghị)
 1. Đăng ký tại https://uptimerobot.com (free, 50 monitors)
 2. Thêm HTTP monitors:
-   - `https://sfc.vn` – keyword: `200`
-   - `https://api.sfc.vn/api/health` – keyword: `"status":"ok"`
+   - `https://halalsgm.vn` – keyword: `200`
+   - `https://api.halalsgm.vn/api/health` – keyword: `"status":"ok"`
 3. Bật alert qua Email / Telegram
 
 ### BetterStack (tùy chọn thêm)
@@ -270,8 +270,8 @@ bash scripts/monitor.sh disk      # disk & volumes
 /root/web-sfc-fe/          ← source code
 /root/web-sfc-fe/.env      ← secrets (chmod 600)
 /etc/letsencrypt/          ← SSL certs (Let's Encrypt)
-/var/backups/sfc-postgres/ ← database backups
-/var/log/sfc-backup.log    ← backup logs
+/var/backups/halal-postgres/ ← database backups
+/var/log/halal-backup.log    ← backup logs
 ```
 
 ```bash
@@ -313,12 +313,12 @@ docker compose logs <service-name>  # xem log chi tiết
 
 ### Redis lỗi password
 ```bash
-docker exec sfc-redis-1 redis-cli -a $REDIS_PASSWORD ping
+docker exec halal-redis-1 redis-cli -a $REDIS_PASSWORD ping
 ```
 
 ### PostgreSQL không connect
 ```bash
-docker exec sfc-postgres-1 pg_isready -U sfc -d sfc
+docker exec halal-postgres-1 pg_isready -U halal -d halal
 ```
 
 ### SSL cert hết hạn
@@ -344,7 +344,7 @@ Khi traffic tăng, các bước scale theo thứ tự:
 ## Tham khảo thêm
 
 - [Cloudflare R2 migration](./cloudflare-setup.md)
-- [Nginx config](../nginx/conf.d/sfc.conf)
+- [Nginx config](../nginx/conf.d/halal.conf)
 - [Monitor script](../scripts/monitor.sh)
 - [Backup script](../scripts/backup-postgres.sh)
 

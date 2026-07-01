@@ -5,7 +5,7 @@
  * reflect new content immediately instead of waiting for the 60s TTL.
  *
  * Strapi → Settings → Webhooks → create webhook:
- *   URL:  https://sfc.vn/api/revalidate
+ *   URL:  https://halalsgm.vn/api/revalidate
  *   Headers: { Authorization: Bearer <REVALIDATE_SECRET> }
  *   Events: Entry (create, update, delete, publish, unpublish)
  *

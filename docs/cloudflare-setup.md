@@ -8,7 +8,7 @@ Sau khi deploy server, cần cấu hình thêm trên **Cloudflare Dashboard** đ
 
 | Type  | Name        | Content (IP server) | Proxy      |
 |-------|-------------|---------------------|------------|
-| A     | `sfc.vn`    | `<SERVER_IP>`       | ✅ Proxied |
+| A     | `halalsgm.vn`    | `<SERVER_IP>`       | ✅ Proxied |
 | A     | `www`       | `<SERVER_IP>`       | ✅ Proxied |
 | A     | `api`       | `<SERVER_IP>`       | ✅ Proxied |
 
@@ -39,7 +39,7 @@ Vào **Caching → Cache Rules → Create rule**.
 ### Rule 2 — API responses (dùng Redis TTL)
 | Field | Value |
 |-------|-------|
-| **Condition** | Hostname `api.sfc.vn` AND URI Path starts with `/api/` AND Request Method `GET` |
+| **Condition** | Hostname `api.halalsgm.vn` AND URI Path starts with `/api/` AND Request Method `GET` |
 | **Cache eligibility** | Eligible for cache |
 | **Edge TTL** | Use origin Cache-Control header *(nginx đã set `s-maxage=60`)* |
 | **Browser TTL** | Bypass cache |
@@ -47,7 +47,7 @@ Vào **Caching → Cache Rules → Create rule**.
 ### Rule 3 — Không cache admin & mutations
 | Field | Value |
 |-------|-------|
-| **Condition** | Hostname `api.sfc.vn` AND (URI Path starts with `/admin` OR Request Method in `POST, PUT, DELETE, PATCH`) |
+| **Condition** | Hostname `api.halalsgm.vn` AND (URI Path starts with `/admin` OR Request Method in `POST, PUT, DELETE, PATCH`) |
 | **Cache eligibility** | Bypass cache |
 
 ---
@@ -59,8 +59,8 @@ Vào **Security → WAF → Rate limiting rules**:
 
 | Rule | Match | Threshold | Action |
 |------|-------|-----------|--------|
-| Contact form | `api.sfc.vn/api/contacts` POST | 5 req/min per IP | Block 10 phút |
-| Admin brute force | `api.sfc.vn/admin/login` | 10 req/min per IP | Challenge |
+| Contact form | `api.halalsgm.vn/api/contacts` POST | 5 req/min per IP | Block 10 phút |
+| Admin brute force | `api.halalsgm.vn/admin/login` | 10 req/min per IP | Challenge |
 
 ### Bot Fight Mode
 **Security → Bots → Bot Fight Mode:** bật ON
@@ -106,9 +106,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/purge_cache" 
   -H "Content-Type: application/json" \
   --data '{
     "files": [
-      "https://sfc.vn/",
-      "https://sfc.vn/blog",
-      "https://api.sfc.vn/api/articles"
+      "https://halalsgm.vn/",
+      "https://halalsgm.vn/blog",
+      "https://api.halalsgm.vn/api/articles"
     ]
   }'
 ```

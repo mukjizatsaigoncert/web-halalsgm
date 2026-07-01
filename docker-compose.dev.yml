@@ -39,15 +39,15 @@ services:
   # Only runs on first boot (seed script checks initHasRun flag in DB).
   # Reuses the already-built backend image — no separate build needed.
   seeder:
-    image: sfc-backend
+    image: halal-backend
     command: ["node", "scripts/seed.js"]
     environment:
       NODE_ENV: development
       DATABASE_CLIENT: postgres
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
-      DATABASE_NAME: ${POSTGRES_DB:-sfc}
-      DATABASE_USERNAME: ${POSTGRES_USER:-sfc}
+      DATABASE_NAME: ${POSTGRES_DB:-halal}
+      DATABASE_USERNAME: ${POSTGRES_USER:-halal}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE_SSL: "false"
       APP_KEYS: ${APP_KEYS}
@@ -72,5 +72,5 @@ services:
 volumes:
   strapi-uploads:
     external: true
-    name: sfc_strapi-uploads
+    name: halal_strapi-uploads
 

@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "NextSpace - Architecture &amp; Interior Firm NextJS Template",
-    "base_url": "https://nextspace-nextjs.vercel.app",
+    "title": "SaigonCert - Công ty Cổ phần Chứng nhận và Giám định SaigonCert",
+    "base_url": "https://halalsgm.vn",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
@@ -12,7 +12,7 @@
     "logo_height": "55",
     "logo_mobile_width": "101",
     "logo_mobile_height": "35",
-    "logo_text": "SFC"
+    "logo_text": "Halal"
   },
 
   "settings": {
@@ -21,11 +21,11 @@
 
   "params": {
     "contact_form_action": "#",
-    "address": "123 Main Street, New York, NY 10001",
-    "phone": "123-456-7890",
-    "email": "info@nextspace.com",
-    "footer_title": "Ready To Build Your Dream Project?",
-    "footer_content": "Develops conceptual design ideas, refines them into detailed plans."
+    "address": "Số 139 Man Thiện, P. Hiệp Phú, TP. Thủ Đức, TP. Hồ Chí Minh",
+    "phone": "0793 827 777",
+    "email": "knknpb9999@gmail.com",
+    "footer_title": "Sẵn Sàng Chứng Nhận Sản Phẩm Của Bạn?",
+    "footer_content": "Tư vấn chứng nhận Halal, ISO và hợp quy nhanh chóng, chính xác, đúng tiến độ."
   },
 
   "navigation_button": {
@@ -46,8 +46,8 @@
   },
 
   "metadata": {
-    "meta_author": "Themefisher",
+    "meta_author": "SaigonCert",
     "meta_image": "/images/og-image.png",
-    "meta_description": "NextSpace - Architecture &amp; Interior Firm NextJS Template"
+    "meta_description": "Công ty Cổ phần Chứng nhận và Giám định SaigonCert - Chứng nhận Halal, ISO 9001, ISO 14001, hợp quy phân bón, thức ăn chăn nuôi và giám định hàng hóa uy tín tại Việt Nam."
   }
 }

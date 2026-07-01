@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Bootstrap Let's Encrypt certificates for the SFC stack using certbot's
+# Bootstrap Let's Encrypt certificates for the Halal stack using certbot's
 # standalone mode, then copy them into nginx/certs/ where docker-compose
 # mounts them read-only.
 #
-# Usage:  sudo ./scripts/init-ssl.sh sfc.vn www.sfc.vn api.sfc.vn admin@sfc.vn
+# Usage:  sudo ./scripts/init-ssl.sh halalsgm.vn www.halalsgm.vn api.halalsgm.vn admin@halalsgm.vn
 set -euo pipefail
 
 if [[ $# -lt 2 ]]; then

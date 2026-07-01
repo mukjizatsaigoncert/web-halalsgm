@@ -16,7 +16,7 @@ cd "$(dirname "$0")/.."
 
 BACKUP_DIR=".migration"
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
-ARCHIVE="${BACKUP_DIR}/sfc-${STAMP}.tar.gz"
+ARCHIVE="${BACKUP_DIR}/halal-${STAMP}.tar.gz"
 
 mkdir -p "$BACKUP_DIR"
 

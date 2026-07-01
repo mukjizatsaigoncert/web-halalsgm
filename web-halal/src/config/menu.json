@@ -13,11 +13,11 @@
       "url": "/linh-vuc-hoat-dong",
       "hasChildren": true,
       "children": [
-        { "name": "Tổ chức sự kiện", "url": "/linh-vuc-hoat-dong/to-chuc-su-kien" },
-        { "name": "Sản xuất video", "url": "/linh-vuc-hoat-dong/san-xuat-video" },
-        { "name": "Thiết kế thương hiệu", "url": "/linh-vuc-hoat-dong/thiet-ke-thuong-hieu" },
-        { "name": "Quản lý kênh truyền thông", "url": "/linh-vuc-hoat-dong/quan-ly-kenh-truyen-thong" },
-        { "name": "Truyền thông", "url": "/linh-vuc-hoat-dong/truyen-thong" }
+        { "name": "Chứng nhận Halal", "url": "/linh-vuc-hoat-dong/chung-nhan-halal" },
+        { "name": "Chứng nhận ISO 9001 & 14001", "url": "/linh-vuc-hoat-dong/chung-nhan-iso" },
+        { "name": "Hợp quy phân bón & thức ăn chăn nuôi", "url": "/linh-vuc-hoat-dong/hop-quy-phan-bon-thuc-an-chan-nuoi" },
+        { "name": "Giám định hàng hóa", "url": "/linh-vuc-hoat-dong/giam-dinh-hang-hoa" },
+        { "name": "Khử trùng - Kiểm soát côn trùng", "url": "/linh-vuc-hoat-dong/khu-trung-kiem-soat-con-trung" }
       ]
     },
     {

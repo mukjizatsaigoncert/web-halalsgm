@@ -22,15 +22,15 @@ export default function Footer() {
 
   // Lĩnh vực hoạt động
   const services = [
-    { name: "Tổ chức sự kiện", url: "/linh-vuc-hoat-dong/to-chuc-su-kien" },
-    { name: "Sản xuất video", url: "/linh-vuc-hoat-dong/san-xuat-video" },
+    { name: "Chứng nhận Halal", url: "/linh-vuc-hoat-dong/chung-nhan-halal" },
+    { name: "Chứng nhận ISO 9001 & 14001", url: "/linh-vuc-hoat-dong/chung-nhan-iso" },
     {
-      name: "Thiết kế thương hiệu",
-      url: "/linh-vuc-hoat-dong/thiet-ke-thuong-hieu",
+      name: "Hợp quy phân bón & thức ăn chăn nuôi",
+      url: "/linh-vuc-hoat-dong/hop-quy-phan-bon-thuc-an-chan-nuoi",
     },
     {
-      name: "Quản lý kênh truyền thông",
-      url: "/linh-vuc-hoat-dong/quan-ly-kenh-truyen-thong",
+      name: "Giám định hàng hóa",
+      url: "/linh-vuc-hoat-dong/giam-dinh-hang-hoa",
     },
   ];
 
@@ -50,9 +50,9 @@ export default function Footer() {
               loading="lazy"
             />
             <p className="text-white/70 text-sm leading-relaxed mb-6">
-              Trung tâm Điện ảnh và Truyền hình Sài Gòn - Đơn vị hàng đầu trong
-              lĩnh vực sản xuất nội dung truyền thông, tổ chức sự kiện và
-              marketing online.
+              Công ty Cổ phần Chứng nhận và Giám định SaigonCert - Đơn vị
+              chứng nhận Halal, ISO 9001, ISO 14001, hợp quy và giám định hàng
+              hóa uy tín tại Việt Nam.
             </p>
             {/* Social Links */}
             <div className="flex gap-3">
@@ -161,8 +161,8 @@ export default function Footer() {
         {/* Bottom Footer */}
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/50 text-sm text-center md:text-left">
-            © {new Date().getFullYear()} Trung tâm Điện ảnh và Truyền hình Sài
-            Gòn. All rights reserved.
+            © {new Date().getFullYear()} Công ty Cổ phần Chứng nhận và Giám
+            định SaigonCert. All rights reserved.
           </p>
         </div>
       </div>

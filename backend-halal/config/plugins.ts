@@ -16,8 +16,8 @@ export default ({ env }: { env: any }) => {
   const r2AccountId   = env('R2_ACCOUNT_ID', '');
   const r2AccessKey   = env('R2_ACCESS_KEY_ID', '');
   const r2SecretKey   = env('R2_SECRET_ACCESS_KEY', '');
-  const r2Bucket      = env('R2_BUCKET', 'sfc-uploads');
-  const r2PublicUrl   = env('R2_PUBLIC_URL', '');   // e.g. https://uploads.sfc.vn
+  const r2Bucket      = env('R2_BUCKET', 'halal-uploads');
+  const r2PublicUrl   = env('R2_PUBLIC_URL', '');   // e.g. https://uploads.halalsgm.vn
   const useR2         = Boolean(r2AccessKey && r2SecretKey && r2AccountId);
 
   const uploadConfig = useR2
@@ -79,9 +79,9 @@ export default ({ env }: { env: any }) => {
         openapi: '3.0.0',
         info: {
           version: '1.0.0',
-          title: 'SFC API',
-          description: 'REST API for the SAIGONCERT (SFC) website',
-          contact: { name: 'SFC' },
+          title: 'SaigonCert Halal API',
+          description: 'REST API for the SaigonCert Halal certification website',
+          contact: { name: 'SaigonCert' },
         },
         'x-strapi-config': {
           plugins: ['upload', 'users-permissions'],
