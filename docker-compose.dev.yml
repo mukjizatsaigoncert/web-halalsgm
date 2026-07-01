@@ -5,7 +5,11 @@
 #  - Expose backend (1337) and frontend (3000) directly to the host
 #  - Relax CORS to localhost
 #  - Skip nginx (comment out reference in compose up)
-#  - Mount source code for live reload (use only with dev targets below)
+#
+# No source bind-mounts / hot-reload here — both images are the same
+# production multi-stage build as docker-compose.yml. After code changes,
+# rerun with --build. For a live-reload loop, run `npm run dev` /
+# `yarn dev` directly on the host instead of through Docker.
 
 services:
   postgres:

@@ -1,12 +1,12 @@
 {
   "global": {
-    "siteName": "Trung Tâm Điện Ảnh và Truyền Hình Sài Gòn",
+    "siteName": "SaigonCert - Công ty Cổ phần Chứng nhận và Giám định SaigonCert",
     "defaultSeo": {
-      "metaTitle": "SaigonCert - Chứng nhận và Giám định",
-      "metaDescription": "Trung tâm điện ảnh và truyền hình hàng đầu tại Sài Gòn - chuyên nghiệp, sáng tạo, trách nhiệm",
+      "metaTitle": "SaigonCert - Chứng nhận Halal, ISO và Giám định hàng hóa",
+      "metaDescription": "Tổ chức chứng nhận Halal, ISO 9001/14001, hợp quy và giám định hàng hóa uy tín tại Việt Nam - chính xác, đúng tiến độ, được công nhận quốc tế",
       "shareImage": null
     },
-    "siteDescription": "Chuyên nghiệp - Sáng tạo - Trách nhiệm",
+    "siteDescription": "Chứng nhận Halal - ISO - Hợp quy - Giám định hàng hóa",
     "favicon": null
   },
   "about": {
@@ -15,11 +15,11 @@
       {
         "__component": "shared.quote",
         "title": "Tầm nhìn",
-        "body": "Trở thành trung tâm truyền thông hàng đầu Đông Nam Á vào năm 2030"
+        "body": "Trở thành tổ chức chứng nhận và giám định hàng đầu Việt Nam, được công nhận rộng rãi trên thị trường quốc tế Halal"
       },
       {
         "__component": "shared.rich-text",
-        "body": "## Trung Tâm Điện Ảnh và Truyền Hình Sài Gòn\n\nChúng tôi là đơn vị tiên phong trong lĩnh vực sản xuất nội dung sáng tạo tại Việt Nam. Với đội ngũ chuyên nghiệp và trang thiết bị hiện đại, chúng tôi cung cấp các dịch vụ truyền thông toàn diện từ sản xuất video, thiết kế thương hiệu đến quản lý kênh truyền thông.\n\n## Sứ mệnh\n\nKết nối thương hiệu với khán giả thông qua nội dung sáng tạo và chiến lược truyền thông hiệu quả."
+        "body": "## Công ty Cổ phần Chứng nhận và Giám định SaigonCert\n\nSaigonCert là tổ chức chứng nhận và giám định độc lập, cung cấp dịch vụ chứng nhận Halal, chứng nhận hệ thống quản lý ISO 9001/14001, hợp quy phân bón - thức ăn chăn nuôi, giám định hàng hóa và khử trùng - kiểm soát côn trùng cho doanh nghiệp trong và ngoài nước.\n\n## Sứ mệnh\n\nĐồng hành cùng doanh nghiệp Việt Nam đáp ứng các tiêu chuẩn quốc tế, mở rộng thị trường xuất khẩu sang các quốc gia Hồi giáo và nâng cao chất lượng sản phẩm, dịch vụ."
       },
       {
         "__component": "shared.media",
@@ -28,11 +28,11 @@
     ]
   },
   "categories": [
-    { "name": "Sản Xuất Video", "slug": "san-xuat-video" },
-    { "name": "Thiết Kế Thương Hiệu", "slug": "thiet-ke-thuong-hieu" },
-    { "name": "Truyền Thông", "slug": "truyen-thong" },
-    { "name": "Tổ Chức Sự Kiện", "slug": "to-chuc-su-kien" },
-    { "name": "Quản Lý Kênh Truyền Thông", "slug": "quan-ly-kenh-truyen-thong" }
+    { "name": "Chứng nhận Halal", "slug": "chung-nhan-halal" },
+    { "name": "Chứng nhận ISO 9001 & 14001", "slug": "chung-nhan-iso" },
+    { "name": "Hợp quy phân bón & thức ăn chăn nuôi", "slug": "hop-quy-phan-bon-thuc-an-chan-nuoi" },
+    { "name": "Giám định hàng hóa", "slug": "giam-dinh-hang-hoa" },
+    { "name": "Khử trùng - Kiểm soát côn trùng", "slug": "khu-trung-kiem-soat-con-trung" }
   ],
   "authors": [
     {
@@ -48,108 +48,104 @@
   ],
   "articles": [
     {
-      "title": "5 xu hướng sản xuất video nổi bật năm 2025",
-      "slug": "xu-huong-san-xuat-video-2025",
+      "title": "Chứng nhận Halal là gì và vì sao doanh nghiệp cần quan tâm?",
+      "slug": "chung-nhan-halal-la-gi",
       "category": { "id": 1 },
       "author": { "id": 1 },
-      "description": "Khám phá những xu hướng sản xuất video đang thống trị ngành truyền thông trong năm 2025",
+      "description": "Tìm hiểu về chứng nhận Halal, điều kiện áp dụng và lợi ích khi xuất khẩu sang thị trường Hồi giáo",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Xu hướng video ngắn lên ngôi\n\nTrong bối cảnh người dùng ngày càng ưa thích nội dung nhanh, ngắn gọn, các video dưới 60 giây đang chiếm lĩnh thị trường. TikTok, Instagram Reels và YouTube Shorts đang dẫn đầu xu hướng này.\n\n## Sản xuất video theo phong cách cinematic\n\nCác thương hiệu ngày càng đầu tư nhiều hơn vào chất lượng hình ảnh và âm thanh, hướng tới phong cách điện ảnh chuyên nghiệp ngay cả với video thương mại."
+          "body": "## Chứng nhận Halal là gì\n\nHalal là thuật ngữ chỉ những sản phẩm được phép sử dụng theo luật Hồi giáo (Sharia). Chứng nhận Halal xác nhận toàn bộ quy trình sản xuất, từ nguyên liệu đến đóng gói, đều tuân thủ các tiêu chuẩn này.\n\n## Vì sao doanh nghiệp cần chứng nhận Halal\n\nThị trường Halal toàn cầu có quy mô hàng nghìn tỷ USD, bao gồm các quốc gia như Malaysia, Indonesia, UAE, Qatar. Chứng nhận Halal là điều kiện bắt buộc để xuất khẩu thực phẩm, mỹ phẩm, dược phẩm sang các thị trường này."
         },
         {
           "__component": "shared.quote",
-          "title": "Chuyên gia truyền thông",
-          "body": "Nội dung chất lượng cao và câu chuyện hấp dẫn chính là chìa khóa để thu hút khán giả trong thời đại số."
+          "title": "Chuyên gia chứng nhận",
+          "body": "Chứng nhận Halal không chỉ là giấy phép xuất khẩu mà còn là cam kết về chất lượng và đạo đức trong sản xuất."
         },
         { "__component": "shared.media", "file": "coffee-art.jpg" }
       ]
     },
     {
-      "title": "Xây dựng thương hiệu mạnh trong thời đại số",
-      "slug": "xay-dung-thuong-hieu-thoi-dai-so",
+      "title": "ISO 9001 và ISO 14001: Nền tảng quản lý chất lượng cho doanh nghiệp",
+      "slug": "iso-9001-iso-14001-nen-tang-quan-ly",
       "category": { "id": 2 },
       "author": { "id": 2 },
-      "description": "Hướng dẫn toàn diện về cách xây dựng và phát triển thương hiệu trong môi trường kỹ thuật số hiện đại",
+      "description": "So sánh ISO 9001 (quản lý chất lượng) và ISO 14001 (quản lý môi trường), lợi ích khi áp dụng song song",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Tầm quan trọng của bộ nhận diện thương hiệu\n\nMột bộ nhận diện thương hiệu nhất quán giúp doanh nghiệp tạo ra ấn tượng chuyên nghiệp và đáng tin cậy trong mắt khách hàng. Từ logo, màu sắc đến font chữ, mọi yếu tố đều cần được thiết kế có chủ đích.\n\n## Chiến lược nội dung cho thương hiệu\n\nNội dung chất lượng là nền tảng để xây dựng mối quan hệ lâu dài với khách hàng. Hãy kể câu chuyện thương hiệu của bạn một cách chân thực và hấp dẫn."
+          "body": "## ISO 9001 - Hệ thống quản lý chất lượng\n\nISO 9001 giúp doanh nghiệp chuẩn hóa quy trình, kiểm soát chất lượng sản phẩm/dịch vụ và nâng cao sự hài lòng của khách hàng.\n\n## ISO 14001 - Hệ thống quản lý môi trường\n\nISO 14001 hỗ trợ doanh nghiệp kiểm soát tác động môi trường trong hoạt động sản xuất, đáp ứng yêu cầu pháp lý và kỳ vọng của đối tác quốc tế."
         },
         {
           "__component": "shared.quote",
-          "title": "Jeff Bezos",
-          "body": "Thương hiệu của bạn là những gì người khác nói về bạn khi bạn không có mặt trong phòng."
+          "title": "Kinh nghiệm tư vấn",
+          "body": "Áp dụng song song ISO 9001 và ISO 14001 giúp doanh nghiệp tối ưu vận hành và giảm rủi ro pháp lý về môi trường."
         }
       ]
     },
     {
-      "title": "Chiến lược truyền thông hiệu quả cho doanh nghiệp",
-      "slug": "chien-luoc-truyen-thong-doanh-nghiep",
+      "title": "Hợp quy phân bón và thức ăn chăn nuôi: Quy trình và hồ sơ cần thiết",
+      "slug": "hop-quy-phan-bon-thuc-an-chan-nuoi",
       "category": { "id": 3 },
       "author": { "id": 1 },
-      "description": "Những chiến lược truyền thông phù hợp với ngân sách hạn chế nhưng vẫn đạt hiệu quả cao",
+      "description": "Hướng dẫn quy trình chứng nhận hợp quy phân bón, thức ăn chăn nuôi theo quy định pháp luật hiện hành",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Tận dụng mạng xã hội miễn phí\n\nFacebook, Instagram, TikTok và YouTube đều cung cấp công cụ miễn phí giúp doanh nghiệp nhỏ tiếp cận khách hàng tiềm năng. Điều quan trọng là phải đăng tải nội dung đều đặn và có chất lượng.\n\n## Hợp tác với KOL/KOC địa phương\n\nThay vì chi nhiều tiền cho các influencer lớn, hãy tìm kiếm những người có ảnh hưởng trong cộng đồng địa phương."
+          "body": "## Vì sao cần hợp quy\n\nTheo quy định của Bộ Nông nghiệp và Phát triển nông thôn, phân bón và thức ăn chăn nuôi trước khi lưu hành trên thị trường phải được chứng nhận hợp quy.\n\n## Hồ sơ và quy trình\n\nDoanh nghiệp cần chuẩn bị mẫu thử nghiệm, hồ sơ công bố hợp quy và tài liệu kỹ thuật sản phẩm. Tổ chức chứng nhận sẽ đánh giá và cấp giấy chứng nhận nếu sản phẩm đạt yêu cầu."
         },
         { "__component": "shared.media", "file": "coffee-beans.jpg" }
       ]
     },
     {
-      "title": "Bí quyết tổ chức sự kiện thành công trong kỷ nguyên mới",
-      "slug": "bi-quyet-to-chuc-su-kien-thanh-cong",
+      "title": "Giám định hàng hóa xuất nhập khẩu: Quy trình và tiêu chuẩn áp dụng",
+      "slug": "giam-dinh-hang-hoa-xuat-nhap-khau",
       "category": { "id": 4 },
       "author": { "id": 2 },
-      "description": "Những điều cần biết để tổ chức sự kiện chuyên nghiệp, ấn tượng và đáng nhớ",
+      "description": "Những điều cần biết về dịch vụ giám định hàng hóa xuất nhập khẩu, đảm bảo chất lượng và số lượng đúng hợp đồng",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Lên kế hoạch chi tiết\n\nMột sự kiện thành công bắt đầu từ khâu lên kế hoạch kỹ lưỡng. Hãy xác định rõ mục tiêu, đối tượng khách mời, ngân sách và timeline trước ít nhất 3 tháng.\n\n## Kết hợp trải nghiệm trực tiếp và trực tuyến\n\nSự kiện hybrid đang trở thành xu hướng phổ biến. Đây là cách hiệu quả để tiếp cận nhiều khán giả hơn và giảm chi phí tổ chức."
+          "body": "## Giám định hàng hóa là gì\n\nGiám định hàng hóa là hoạt động kiểm tra, xác nhận chất lượng, số lượng, quy cách của hàng hóa trước khi giao nhận, giúp giảm thiểu tranh chấp thương mại.\n\n## Các loại hình giám định phổ biến\n\nGiám định số lượng, giám định chất lượng, giám định tình trạng bao bì và giám định tổn thất là những dịch vụ được doanh nghiệp xuất nhập khẩu sử dụng thường xuyên nhất."
         },
         {
           "__component": "shared.quote",
           "title": "Kinh nghiệm thực tế",
-          "body": "Sự kiện thành công không chỉ ở quy mô hoành tráng mà còn ở những chi tiết nhỏ tạo nên trải nghiệm đáng nhớ."
+          "body": "Một báo cáo giám định độc lập, chính xác là căn cứ quan trọng để bảo vệ quyền lợi các bên trong hợp đồng thương mại."
         }
       ]
     },
     {
-      "title": "Quản lý kênh YouTube hiệu quả: Từ A đến Z",
-      "slug": "quan-ly-kenh-youtube-hieu-qua",
+      "title": "Khử trùng và kiểm soát côn trùng cho hàng hóa xuất khẩu",
+      "slug": "khu-trung-kiem-soat-con-trung-hang-xuat-khau",
       "category": { "id": 5 },
       "author": { "id": 1 },
-      "description": "Hướng dẫn toàn diện về cách xây dựng và phát triển kênh YouTube từ con số không",
+      "description": "Quy trình khử trùng, kiểm soát côn trùng theo tiêu chuẩn kiểm dịch thực vật quốc tế (ISPM 15)",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Tối ưu hóa SEO cho YouTube\n\nTiêu đề, mô tả và thẻ tag là những yếu tố quan trọng giúp video của bạn dễ tìm kiếm hơn. Hãy nghiên cứu từ khóa phù hợp với nội dung và đối tượng khán giả của bạn.\n\n## Lịch đăng tải đều đặn\n\nThuật toán YouTube ưu tiên các kênh có lịch đăng tải nhất quán. Hãy cam kết đăng ít nhất 1-2 video mỗi tuần."
+          "body": "## Vì sao cần khử trùng hàng hóa\n\nNhiều thị trường nhập khẩu yêu cầu hàng hóa, đặc biệt là bao bì gỗ, phải được khử trùng theo tiêu chuẩn ISPM 15 để ngăn ngừa lây lan sinh vật gây hại.\n\n## Quy trình kiểm soát côn trùng\n\nDịch vụ bao gồm khảo sát, xử lý xông hơi khử trùng (fumigation) và cấp chứng nhận kiểm dịch để hàng hóa đủ điều kiện thông quan."
         },
-        { "__component": "shared.media", "file": "beautiful-picture.jpg" },
-        {
-          "__component": "shared.rich-text",
-          "body": "## Phân tích dữ liệu kênh\n\nYouTube Studio cung cấp đầy đủ công cụ phân tích giúp bạn hiểu rõ hơn về khán giả. Hãy dành thời gian mỗi tuần để đọc các báo cáo và điều chỉnh chiến lược phù hợp."
-        }
+        { "__component": "shared.media", "file": "beautiful-picture.jpg" }
       ]
     },
     {
-      "title": "Xu hướng thiết kế đồ họa 2025: Màu sắc và Typography",
-      "slug": "xu-huong-thiet-ke-do-hoa-2025",
-      "category": { "id": 2 },
+      "title": "Doanh nghiệp Việt cần chuẩn bị gì để xuất khẩu sang thị trường Halal?",
+      "slug": "chuan-bi-xuat-khau-thi-truong-halal",
+      "category": { "id": 1 },
       "author": { "id": 2 },
-      "description": "Cập nhật những xu hướng thiết kế đồ họa mới nhất đang định hình ngành sáng tạo năm 2025",
+      "description": "Các bước chuẩn bị nguyên liệu, quy trình sản xuất và hồ sơ cần thiết để đạt chứng nhận Halal khi xuất khẩu",
       "cover": null,
       "blocks": [
         {
           "__component": "shared.rich-text",
-          "body": "## Màu sắc táo bạo và tương phản cao\n\nNăm 2025 chứng kiến sự trở lại của những bảng màu táo bạo, tương phản mạnh. Các thương hiệu không ngại sử dụng màu sắc rực rỡ để nổi bật giữa đám đông.\n\n## Typography có cá tính\n\nFont chữ handwriting và display đang trở thành lựa chọn hàng đầu cho các chiến dịch muốn truyền tải cảm xúc cá nhân và tính xác thực."
+          "body": "## Kiểm soát nguyên liệu đầu vào\n\nToàn bộ nguyên liệu, phụ gia phải có nguồn gốc Halal, không chứa thành phần từ heo hoặc chất cấm theo luật Hồi giáo.\n\n## Tách biệt quy trình sản xuất\n\nDây chuyền sản xuất sản phẩm Halal cần được tách biệt hoàn toàn khỏi dây chuyền sản phẩm không Halal để tránh nhiễm chéo."
         },
         {
           "__component": "shared.slider",
