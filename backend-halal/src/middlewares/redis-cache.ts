@@ -16,6 +16,12 @@ import Redis from 'ioredis';
 
 export const CACHE_PREFIX = 'strapi:api:';
 
+// One-time upload-authorization tokens (see certification-application
+// controller + restrict-upload middleware) — reuses this module's Redis
+// client rather than opening a second connection.
+export const UPLOAD_TOKEN_PREFIX = 'cert-app-upload-token:';
+export const UPLOAD_TOKEN_TTL_SECONDS = 300;
+
 let _redis: Redis | null = null;
 
 export function getRedisClient(): Redis | null {

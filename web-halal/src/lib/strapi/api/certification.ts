@@ -85,6 +85,11 @@ export async function submitCertificationApplication(
       uploadBody.append("ref", "api::certification-application.certification-application");
       uploadBody.append("refId", String(result.data.id));
       uploadBody.append("field", "documents");
+      // Proves we're the one who just created this entry (anonymous
+      // submissions have no account to check ownership against otherwise) —
+      // see restrict-upload.ts on the backend.
+      const uploadToken = result.meta?.uploadToken;
+      if (uploadToken) uploadBody.append("uploadToken", uploadToken);
 
       const uploadHeaders: Record<string, string> = {};
       if (jwt) uploadHeaders["Authorization"] = `Bearer ${jwt}`;

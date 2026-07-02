@@ -12,10 +12,19 @@
  *   requires `data` to already be a parsed object and never JSON-parses a
  *   multipart `data` field itself. Rate limiting is applied via the
  *   global::rate-limit middleware in routes.
+ *
+ *   Anonymous submissions (no login) still need a way to attach documents
+ *   without letting anyone else attach files to their entry by guessing its
+ *   id — so a one-time upload token is minted here, stored in Redis for 5
+ *   minutes, and returned in the response. src/middlewares/restrict-upload.ts
+ *   requires either this token or matching applicant ownership before
+ *   allowing POST /api/upload to proceed (IDOR fix).
  * - me: returns only the current applicant's own submissions.
  */
 import { factories } from '@strapi/strapi';
+import crypto from 'crypto';
 import { verifyRecaptcha } from '../../../utils/recaptcha';
+import { getRedisClient, UPLOAD_TOKEN_PREFIX, UPLOAD_TOKEN_TTL_SECONDS } from '../../../middlewares/redis-cache';
 
 export default factories.createCoreController(
   'api::certification-application.certification-application',
@@ -49,6 +58,15 @@ export default factories.createCoreController(
             documentId: response.data.documentId,
             data: { applicant: ctx.state.user.id } as any,
           });
+      }
+
+      if (response?.data?.id) {
+        const redis = getRedisClient();
+        if (redis) {
+          const uploadToken = crypto.randomBytes(24).toString('hex');
+          await redis.setex(`${UPLOAD_TOKEN_PREFIX}${response.data.id}`, UPLOAD_TOKEN_TTL_SECONDS, uploadToken);
+          response.meta = { ...response.meta, uploadToken };
+        }
       }
 
       return response;
