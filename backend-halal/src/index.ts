@@ -61,14 +61,23 @@ function registerCacheInvalidation(strapi: Core.Strapi) {
 /**
  * Permissions map applied to the `public` role on every boot.
  *
- * - Contact: ONLY `create` is exposed. Submissions must never be listed or
- *   read anonymously (they contain PII).
+ * - Contact, Certification Application: ONLY `create` is exposed.
+ *   Submissions must never be listed or read anonymously (they contain PII).
+ * - Certificate: read-only lookup (find/findOne) — schema has no PII fields.
+ * - Upload: `content-api.upload` lets applicants attach documents to their
+ *   submission after creating it (two-step: create entry, then attach files
+ *   via ref/refId/field) — src/middlewares/restrict-upload.ts scopes this to
+ *   certification-application only so it can't be used to attach files
+ *   elsewhere in the system.
  * - All other collection types: read-only (find/findOne).
  *
  * Anything outside this list is implicitly denied for the public role.
  */
 const PUBLIC_PERMISSIONS: Record<string, string[]> = {
   'api::contact.contact': ['create'],
+  'api::certification-application.certification-application': ['create'],
+  'api::certificate.certificate': ['find', 'findOne'],
+  'plugin::upload.content-api': ['upload'],
   'api::article.article': ['find', 'findOne'],
   'api::career.career': ['find', 'findOne'],
   'api::category.category': ['find', 'findOne'],
@@ -77,25 +86,43 @@ const PUBLIC_PERMISSIONS: Record<string, string[]> = {
   'api::global.global': ['find'],
 };
 
-async function syncPublicPermissions(strapi: Core.Strapi) {
-  const publicRole = await strapi.db
-    .query('plugin::users-permissions.role')
-    .findOne({ where: { type: 'public' } });
+/**
+ * Permissions map applied to the `authenticated` role on every boot.
+ *
+ * Strapi evaluates permissions per-role — a request carrying a valid JWT is
+ * checked against `authenticated`, NOT `public`, even for actions Public
+ * already allows. So logged-in applicants need their own explicit grants:
+ * `create` (submit while logged in, auto-linked to their account) and the
+ * custom `me` action (list only their own submissions).
+ */
+const AUTHENTICATED_PERMISSIONS: Record<string, string[]> = {
+  'api::certification-application.certification-application': ['create', 'me'],
+  'plugin::upload.content-api': ['upload'],
+};
 
-  if (!publicRole) {
-    strapi.log.warn('[bootstrap] Public role not found; skipping permission sync');
+async function syncRolePermissions(
+  strapi: Core.Strapi,
+  roleType: 'public' | 'authenticated',
+  permissionsMap: Record<string, string[]>
+) {
+  const role = await strapi.db
+    .query('plugin::users-permissions.role')
+    .findOne({ where: { type: roleType } });
+
+  if (!role) {
+    strapi.log.warn(`[bootstrap] Role "${roleType}" not found; skipping permission sync`);
     return;
   }
 
   const desired = new Set<string>();
-  for (const [uid, actions] of Object.entries(PUBLIC_PERMISSIONS)) {
+  for (const [uid, actions] of Object.entries(permissionsMap)) {
     for (const action of actions) desired.add(`${uid}.${action}`);
   }
 
-  const managedPrefixes = Object.keys(PUBLIC_PERMISSIONS);
+  const managedPrefixes = Object.keys(permissionsMap);
   const existing = await strapi.db
     .query('plugin::users-permissions.permission')
-    .findMany({ where: { role: publicRole.id } });
+    .findMany({ where: { role: role.id } });
 
   // Disable any permission under our managed UIDs that isn't desired.
   for (const perm of existing) {
@@ -105,7 +132,7 @@ async function syncPublicPermissions(strapi: Core.Strapi) {
       await strapi.db
         .query('plugin::users-permissions.permission')
         .delete({ where: { id: perm.id } });
-      strapi.log.info(`[bootstrap] Revoked public permission ${perm.action}`);
+      strapi.log.info(`[bootstrap] Revoked ${roleType} permission ${perm.action}`);
     }
   }
 
@@ -114,9 +141,9 @@ async function syncPublicPermissions(strapi: Core.Strapi) {
     const already = existing.find((p: any) => p.action === action);
     if (already) continue;
     await strapi.db.query('plugin::users-permissions.permission').create({
-      data: { action, role: publicRole.id },
+      data: { action, role: role.id },
     });
-    strapi.log.info(`[bootstrap] Granted public permission ${action}`);
+    strapi.log.info(`[bootstrap] Granted ${roleType} permission ${action}`);
   }
 }
 
@@ -154,7 +181,8 @@ export default {
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     assertProductionSecrets(strapi);
     initSentry(strapi);
-    await syncPublicPermissions(strapi);
+    await syncRolePermissions(strapi, 'public', PUBLIC_PERMISSIONS);
+    await syncRolePermissions(strapi, 'authenticated', AUTHENTICATED_PERMISSIONS);
     registerCacheInvalidation(strapi);
   },
 };

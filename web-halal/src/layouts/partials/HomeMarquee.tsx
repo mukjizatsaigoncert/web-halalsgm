@@ -8,13 +8,13 @@ export default function HomeMarquee({
   repeat = 3,
 }: HomeMarqueeProps) {
   return (
-    <section className="py-10 bg-[#0d3d1f] overflow-hidden">
+    <section className="py-10 bg-primary overflow-hidden">
       <div className="overflow-hidden whitespace-nowrap w-full">
         <div className="inline-flex gap-8 animate-marquee-uc">
           {Array.from({ length: repeat * 2 }).map((_, i) => (
             <span
               key={i}
-              className="inline-block text-[#c8a850] text-[60px] md:text-[100px] lg:text-[160px] font-bold uppercase leading-none flex-shrink-0"
+              className="inline-block text-gold text-[60px] md:text-[100px] lg:text-[160px] font-bold uppercase leading-none flex-shrink-0"
             >
               {text}
             </span>

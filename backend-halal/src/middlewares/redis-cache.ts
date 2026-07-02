@@ -66,6 +66,11 @@ const SKIP_PREFIXES = [
   '/documentation',
   '/api/health',
   '/api/contacts', // POST-only but skipped for safety
+  // The cache key is derived from the URL alone (no Authorization header),
+  // so any authenticated per-user GET route MUST be excluded here — caching
+  // it would serve one applicant's private submissions to the next caller
+  // who hits the same URL within the TTL window.
+  '/api/certification-applications',
 ];
 
 const DEFAULT_TTL = (): number =>

@@ -47,7 +47,7 @@ export default function HomeReview({
   }, [items, uniqueId]);
 
   return (
-    <section className="relative py-20 md:py-28 bg-[#0d3d1f] text-white overflow-hidden">
+    <section className="relative py-20 md:py-28 bg-primary text-white overflow-hidden">
       {/* Radial gradient decoration left side */}
       <div
         className="absolute left-0 top-0 w-2/5 h-full pointer-events-none"
@@ -123,10 +123,10 @@ export default function HomeReview({
                     <div className="flex flex-wrap items-center content-center gap-3 lg:pl-8">
                       <div className="w-full">
                         <p className="text-white text-2xl font-semibold mb-2">{item.satisfactionLabel}</p>
-                        <div className="text-[#c8a850] text-[50px] font-bold leading-none">
+                        <div className="text-gold text-[50px] font-bold leading-none">
                           <Counter end={item.satisfactionPercent} suffix="%" start={0} />
                         </div>
-                        <p className="text-[#c8a850] text-lg font-semibold mt-2 inline-block">
+                        <p className="text-gold text-lg font-semibold mt-2 inline-block">
                           {item.satisfactionDesc}
                         </p>
                       </div>

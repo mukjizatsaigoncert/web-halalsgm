@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { AuthProvider } from "@/lib/auth/AuthContext";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -24,7 +25,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  const tree = <>{children}</>;
+  const tree = <AuthProvider>{children}</AuthProvider>;
 
   if (!recaptchaKey) {
     // In local dev without a site key, skip the provider so the badge and

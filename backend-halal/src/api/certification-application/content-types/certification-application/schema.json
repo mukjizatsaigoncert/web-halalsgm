@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "certification_applications",
+  "info": {
+    "singularName": "certification-application",
+    "pluralName": "certification-applications",
+    "displayName": "Certification Application"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "companyName": {
+      "type": "string",
+      "required": true
+    },
+    "taxCode": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "contactName": {
+      "type": "string",
+      "required": true
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Chứng nhận Halal",
+        "Chứng nhận ISO 9001 & 14001",
+        "Hợp quy phân bón & thức ăn chăn nuôi",
+        "Giám định hàng hóa",
+        "Khử trùng - Kiểm soát côn trùng"
+      ],
+      "required": true
+    },
+    "applicationType": {
+      "type": "enumeration",
+      "enum": ["domestic", "international"],
+      "default": "domestic",
+      "required": true
+    },
+    "notes": {
+      "type": "text"
+    },
+    "documents": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images", "files"]
+    },
+    "applicationStatus": {
+      "type": "enumeration",
+      "enum": ["submitted", "under_review", "site_visit_scheduled", "approved", "rejected"],
+      "default": "submitted"
+    },
+    "applicant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "private": true
+    }
+  }
+}

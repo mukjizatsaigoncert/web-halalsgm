@@ -635,6 +635,122 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCertificateCertificate extends Struct.CollectionTypeSchema {
+  collectionName: 'certificates';
+  info: {
+    displayName: 'Certificate';
+    pluralName: 'certificates';
+    singularName: 'certificate';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    application: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::certification-application.certification-application'
+    > &
+      Schema.Attribute.Private;
+    category: Schema.Attribute.Enumeration<
+      [
+        'Chứng nhận Halal',
+        'Chứng nhận ISO 9001 & 14001',
+        'Hợp quy phân bón & thức ăn chăn nuôi',
+        'Giám định hàng hóa',
+        'Khử trùng - Kiểm soát côn trùng',
+      ]
+    > &
+      Schema.Attribute.Required;
+    certificateNumber: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    companyName: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expiryDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    issuedDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::certificate.certificate'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<['active', 'expired', 'revoked']> &
+      Schema.Attribute.DefaultTo<'active'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCertificationApplicationCertificationApplication
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'certification_applications';
+  info: {
+    displayName: 'Certification Application';
+    pluralName: 'certification-applications';
+    singularName: 'certification-application';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    address: Schema.Attribute.String & Schema.Attribute.Required;
+    applicant: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    > &
+      Schema.Attribute.Private;
+    applicationStatus: Schema.Attribute.Enumeration<
+      [
+        'submitted',
+        'under_review',
+        'site_visit_scheduled',
+        'approved',
+        'rejected',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'submitted'>;
+    applicationType: Schema.Attribute.Enumeration<
+      ['domestic', 'international']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'domestic'>;
+    category: Schema.Attribute.Enumeration<
+      [
+        'Chứng nhận Halal',
+        'Chứng nhận ISO 9001 & 14001',
+        'Hợp quy phân bón & thức ăn chăn nuôi',
+        'Giám định hàng hóa',
+        'Khử trùng - Kiểm soát côn trùng',
+      ]
+    > &
+      Schema.Attribute.Required;
+    companyName: Schema.Attribute.String & Schema.Attribute.Required;
+    contactName: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    documents: Schema.Attribute.Media<'images' | 'files', true>;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::certification-application.certification-application'
+    > &
+      Schema.Attribute.Private;
+    notes: Schema.Attribute.Text;
+    phoneNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    taxCode: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiContactContact extends Struct.CollectionTypeSchema {
   collectionName: 'contacts';
   info: {
@@ -1216,6 +1332,8 @@ declare module '@strapi/strapi' {
       'api::author.author': ApiAuthorAuthor;
       'api::career.career': ApiCareerCareer;
       'api::category.category': ApiCategoryCategory;
+      'api::certificate.certificate': ApiCertificateCertificate;
+      'api::certification-application.certification-application': ApiCertificationApplicationCertificationApplication;
       'api::contact.contact': ApiContactContact;
       'api::global.global': ApiGlobalGlobal;
       'plugin::content-releases.release': PluginContentReleasesRelease;

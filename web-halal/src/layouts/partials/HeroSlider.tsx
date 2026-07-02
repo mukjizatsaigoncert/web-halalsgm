@@ -91,9 +91,9 @@ export default function HeroSlider({
         </div>
       </div>
 
-      {/* Forest green gradient overlay — hides baked-in image text, keeps palette coherent */}
+      {/* Dark navy gradient overlay — hides baked-in image text, keeps palette coherent */}
       <div className="absolute inset-0 z-[5] pointer-events-none"
-        style={{ background: "linear-gradient(135deg, rgba(13,61,31,0.82) 0%, rgba(13,61,31,0.55) 50%, rgba(0,0,0,0.35) 100%)" }} />
+        style={{ background: "linear-gradient(135deg, rgba(8,51,68,0.82) 0%, rgba(8,51,68,0.55) 50%, rgba(0,0,0,0.35) 100%)" }} />
 
       {/* Content overlay: left=heading+CTAs, right=stats 2×2 bottom-right */}
       <div
@@ -158,7 +158,7 @@ export default function HeroSlider({
                   <div
                     className="font-semibold leading-none overflow-hidden flex items-center"
                     style={{
-                      color: "#147b3b",
+                      color: "var(--color-secondary)",
                       fontSize: "clamp(1.5rem, 3vw, 3.125rem)",
                       height: "clamp(1.5rem, 3vw, 3.125rem)",
                     }}
@@ -193,7 +193,7 @@ export default function HeroSlider({
           cursor: pointer;
           transition: all 0.3s;
         }
-        .hero-bullet-active { background: #147b3b; width: 24px; }
+        .hero-bullet-active { background: var(--color-secondary); width: 24px; }
       `}</style>
     </section>
   );

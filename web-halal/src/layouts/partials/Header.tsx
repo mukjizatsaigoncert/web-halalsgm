@@ -3,6 +3,7 @@
 import Logo from "@/components/Logo";
 import config from "@/config/config.json";
 import menu from "@/config/menu.json";
+import { useAuth } from "@/lib/auth/AuthContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
@@ -19,6 +20,7 @@ const { navigation_button, params } = config;
 
 export default function Header() {
   const pathname = usePathname();
+  const { user, loading: authLoading } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -118,6 +120,15 @@ export default function Header() {
                 {navigation_button.label}
               </Link>
             )}
+            {/* Account */}
+            {!authLoading && (
+              <Link
+                href={user ? "/ho-so-cua-toi" : "/dang-nhap"}
+                className="text-sm font-medium text-dark hover:text-secondary transition-colors"
+              >
+                {user ? "Hồ sơ của tôi" : "Đăng nhập"}
+              </Link>
+            )}
             {/* Search icon */}
             <button
               aria-label="Tìm kiếm"
@@ -199,6 +210,18 @@ export default function Header() {
                 </Link>
               </li>
             )
+          )}
+          {/* Mobile account link */}
+          {!authLoading && (
+            <li>
+              <Link
+                href={user ? "/ho-so-cua-toi" : "/dang-nhap"}
+                onClick={closeMobile}
+                className="block px-3 py-3 text-sm font-medium text-dark hover:text-secondary transition-colors"
+              >
+                {user ? "Hồ sơ của tôi" : "Đăng nhập"}
+              </Link>
+            </li>
           )}
           {/* Mobile CTA */}
           <li className="pt-3 border-t border-border mt-2">

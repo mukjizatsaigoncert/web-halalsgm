@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "certificates",
+  "info": {
+    "singularName": "certificate",
+    "pluralName": "certificates",
+    "displayName": "Certificate"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "certificateNumber": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "companyName": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Chứng nhận Halal",
+        "Chứng nhận ISO 9001 & 14001",
+        "Hợp quy phân bón & thức ăn chăn nuôi",
+        "Giám định hàng hóa",
+        "Khử trùng - Kiểm soát côn trùng"
+      ],
+      "required": true
+    },
+    "issuedDate": {
+      "type": "date",
+      "required": true
+    },
+    "expiryDate": {
+      "type": "date",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["active", "expired", "revoked"],
+      "default": "active"
+    },
+    "application": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::certification-application.certification-application",
+      "private": true
+    }
+  }
+}

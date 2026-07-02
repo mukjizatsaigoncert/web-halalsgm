@@ -8,7 +8,7 @@ export const STRAPI_URL =
 // STRAPI_INTERNAL_URL: Docker-internal URL for server-side fetch, e.g. http://backend:1337
 // Must be a function (not a const) so process.env is read at request time,
 // not at module-init / build time when the env var is not yet injected.
-function getStrapiInternalUrl(): string {
+export function getStrapiInternalUrl(): string {
   if (typeof window === "undefined" && process.env.STRAPI_INTERNAL_URL) {
     return process.env.STRAPI_INTERNAL_URL;
   }

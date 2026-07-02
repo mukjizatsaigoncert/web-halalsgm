@@ -31,7 +31,7 @@ export default function HomeAbout2({
   const count = projects.length;
 
   return (
-    <section className="py-20 md:py-28 bg-[#0d3d1f] text-white overflow-hidden">
+    <section className="py-20 md:py-28 bg-primary text-white overflow-hidden">
       <div className="container mx-auto px-4 xl:max-w-[1290px]">
         {/* Heading — max 65% width on desktop */}
         <div data-aos="fade-up-sm" data-aos-delay="0">

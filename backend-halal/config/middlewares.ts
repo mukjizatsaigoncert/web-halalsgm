@@ -66,6 +66,9 @@ export default [
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
+  // See src/middlewares/restrict-upload.ts — scopes the public upload grant
+  // to certification-application only.
+  'global::restrict-upload',
   'strapi::session',
   'strapi::favicon',
   'strapi::public',

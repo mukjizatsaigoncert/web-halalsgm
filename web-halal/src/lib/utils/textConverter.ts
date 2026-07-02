@@ -1,4 +1,3 @@
-import DOMPurify from "isomorphic-dompurify";
 import { slug } from "github-slugger";
 import { marked } from "marked";
 
@@ -25,8 +24,16 @@ const SANITIZE_CONFIG = {
     /^(?:(?:https?|mailto|tel|ftp):|[^a-z]|[a-z+.-]+(?:[^a-z+.\-:]|$))/i,
 };
 
-export const sanitize = (html: string): string =>
-  DOMPurify.sanitize(html, SANITIZE_CONFIG);
+// Lazy require — isomorphic-dompurify pulls in jsdom, which breaks Vercel's
+// serverless bundling for dynamically-rendered routes (ERR_REQUIRE_ESM on a
+// transitive dependency) if loaded eagerly. Deferring the require means
+// pages that only need humanize()/plainify() from this module (no markdown
+// rendering) never trigger it.
+export const sanitize = (html: string): string => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const DOMPurify = require("isomorphic-dompurify");
+  return DOMPurify.sanitize(html, SANITIZE_CONFIG);
+};
 
 // markdownify — parses markdown and returns a React-safe dangerouslySetInnerHTML
 // payload. All output is sanitised via DOMPurify, so callers cannot inject
