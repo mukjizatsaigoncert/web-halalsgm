@@ -50,7 +50,7 @@ const Logo = ({ src }: { src?: string }) => {
     : 110;
 
   return (
-    <Link href="/" className="navbar-brand inline-block">
+    <Link href="/" className="navbar-brand inline-flex items-center gap-2">
       {logoPath || logoMobilePath ? (
         <>
           {/* Mobile Logo - visible on small screens */}
@@ -61,7 +61,7 @@ const Logo = ({ src }: { src?: string }) => {
               src={logoMobilePath}
               alt={title}
               priority
-              className="block lg:hidden"
+              className="block lg:hidden flex-shrink-0"
               style={{
                 height: `${mobileHeight}px`,
                 width: `${mobileWidth}px`,
@@ -76,7 +76,7 @@ const Logo = ({ src }: { src?: string }) => {
               src={logoPath}
               alt={title}
               priority
-              className="hidden lg:block"
+              className="hidden lg:block flex-shrink-0"
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
@@ -84,10 +84,12 @@ const Logo = ({ src }: { src?: string }) => {
             />
           )}
         </>
-      ) : logo_text ? (
-        logo_text
-      ) : (
-        title
+      ) : null}
+      {/* Company wordmark — always shown so visitors know the company name immediately, not just when a logo image happens to render */}
+      {logo_text && (
+        <span className="text-base lg:text-xl font-bold text-dark leading-tight whitespace-nowrap">
+          {logo_text}
+        </span>
       )}
     </Link>
   );

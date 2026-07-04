@@ -35,7 +35,7 @@ export default function HomeCertPortal({
   announcementsSection = "tin-tuc",
 }: HomeCertPortalProps) {
   return (
-    <section className="mt-16 py-20 md:py-28 bg-light border-t border-border">
+    <section className="py-20 md:py-28 bg-light border-t border-border">
       <div className="container mx-auto px-4 xl:max-w-[1290px] space-y-14">
 
         {/* Row 1 — Verify status search + Announcements */}
@@ -193,14 +193,12 @@ export default function HomeCertPortal({
             >
               <span className="relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center text-secondary bg-white shadow-sm">
                 <span className="absolute inset-0 bg-current opacity-10" />
-                {/* ponytail: same pre-colored icon assets as HomePolicy — see note there */}
                 <ImageFallback
                   src={link.icon}
                   width={28}
                   height={28}
                   alt={link.label}
                   className="relative z-10 max-w-[28px] max-h-[28px] w-auto h-auto object-contain"
-                  style={{ filter: "hue-rotate(40deg) saturate(1.4)" }}
                 />
               </span>
               <span className="text-sm font-medium text-dark group-hover:text-secondary transition-colors">

@@ -472,7 +472,7 @@ export default function LichVanNienPage() {
                 <div
                   data-aos="fade-up-sm"
                   data-aos-delay="250"
-                  className="h-full bg-linear-to-br from-emerald-600 to-teal-700 rounded-xl lg:rounded-2xl p-4 lg:p-5 text-white shadow-xl"
+                  className="h-full bg-linear-to-br from-secondary to-[#0a3018] rounded-xl lg:rounded-2xl p-4 lg:p-5 text-white shadow-xl"
                 >
                   {/* Lịch Văn Lang */}
                   <div className="flex items-center gap-2 mb-3 lg:mb-4">
@@ -571,7 +571,7 @@ export default function LichVanNienPage() {
                     {/* Con Nuoc Info */}
                     <div className="border-t border-white/20 pt-4">
                       <div className="text-center mb-3">
-                        <div className="text-xl lg:text-2xl font-bold mb-1 text-cyan-300">
+                        <div className="text-xl lg:text-2xl font-bold mb-1 text-gold">
                           🌊 {calendarInfo.vanLang.conNuoc.name}
                         </div>
                         <div className="text-white/90 text-[10px] lg:text-xs">
@@ -625,7 +625,7 @@ export default function LichVanNienPage() {
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-bold text-emerald-600 mb-2 text-sm lg:text-base">
+                    <h4 className="font-bold text-secondary mb-2 text-sm lg:text-base">
                       🌍 Lịch Văn Lang & Con Nước
                     </h4>
                     <p className="text-body-color text-xs lg:text-sm">

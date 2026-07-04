@@ -1,11 +1,32 @@
 import { fetchArticles, transformStrapiArticle } from "@/lib/strapi/api/articles";
 import SeoMeta from "@/partials/SeoMeta";
+import HeroSlider from "@/partials/HeroSlider";
 import HomeCertPortal from "@/partials/HomeCertPortal";
 import HomeBlog from "@/partials/HomeBlog";
 
 export const revalidate = 60;
 
 // ─── Static data (thay nội dung theo thực tế) ──────────────────────────
+
+const HERO_SLIDES = [
+  {
+    tag: "Uy tín - Chính xác - Trách nhiệm",
+    heading: "Công ty Cổ phần Chứng nhận và Giám định SaigonCert",
+    subheading:
+      "Chứng nhận Halal, ISO 9001, ISO 14001, hợp quy phân bón và thức ăn chăn nuôi, giám định hàng hóa - đồng hành cùng doanh nghiệp Việt vươn ra thị trường quốc tế.",
+  },
+  {
+    tag: "Chứng nhận Halal",
+    heading: "Mở cửa thị trường Halal Trung Đông",
+    subheading:
+      "Tư vấn và cấp chứng nhận Halal cho nông sản, thực phẩm Việt theo tiêu chuẩn GAC, JAKIM, World Halal Council.",
+  },
+  {
+    tag: "Đối tác tin cậy",
+    heading: "Đồng hành cùng doanh nghiệp của bạn",
+    subheading: "Nhiều năm kinh nghiệm trong lĩnh vực chứng nhận và giám định chất lượng.",
+  },
+];
 
 const STATIC_BLOG_POSTS = [
   {
@@ -51,13 +72,16 @@ export default async function Home() {
         description="Chứng nhận Halal, ISO 9001, ISO 14001, hợp quy phân bón, thức ăn chăn nuôi và giám định hàng hóa uy tín tại Việt Nam."
       />
 
-      {/* 1. Cert Portal — tra cứu, thông báo, nộp hồ sơ, liên kết nhanh */}
+      {/* 1. Hero slider — banner ảnh full-width, giống khối slider đầu trang tham chiếu */}
+      <HeroSlider slides={HERO_SLIDES} />
+
+      {/* 2. Cert Portal — tra cứu, thông báo, nộp hồ sơ, liên kết nhanh */}
       <HomeCertPortal
         announcements={articles.length > 0 ? articles : STATIC_BLOG_POSTS}
         announcementsSection="tin-tuc"
       />
 
-      {/* 2. News — Tin tức & Bài viết */}
+      {/* 3. News — Tin tức & Bài viết */}
       <HomeBlog
         tag="Tin tức & Bài viết"
         heading={"Cập nhật tin tức\nngành chứng nhận"}

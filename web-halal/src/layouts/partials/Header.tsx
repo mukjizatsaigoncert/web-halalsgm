@@ -46,12 +46,14 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto px-4 xl:max-w-[1225px]">
-        <nav className="flex items-center justify-between h-16">
+        <nav className="flex items-center justify-between gap-4 h-16">
           {/* Logo */}
-          <Logo />
+          <div className="shrink-0">
+            <Logo />
+          </div>
 
           {/* Nav links — desktop */}
-          <ul className="hidden lg:flex items-center gap-0.5">
+          <ul className="hidden lg:flex items-center gap-0.5 shrink-0">
             {main.map((item) =>
               item.hasChildren ? (
                 <li key={item.url} className="relative group">
@@ -100,7 +102,7 @@ export default function Header() {
           </ul>
 
           {/* Right side — phone + CTA */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4 shrink-0">
             {params?.phone && (
               <a
                 href={`tel:${params.phone.replace(/\s/g, "")}`}

@@ -25,16 +25,12 @@ export default function HomePolicy({ items }: HomePolicyProps) {
               {/* Icon box — 90×90, bg color + 10% overlay */}
               <div className="relative flex-shrink-0 w-[90px] h-[90px] rounded-xl overflow-hidden flex items-center justify-center text-secondary">
                 <span className="absolute inset-0 bg-current opacity-10" />
-                {/* ponytail: source icons are pre-colored forest-green raster assets;
-                    hue-rotate shifts them onto the current cyan theme without new art.
-                    Re-export the icons in cyan (or as currentColor SVGs) to remove this. */}
                 <ImageFallback
                   src={item.image}
                   width={40}
                   height={40}
                   alt={item.title}
                   className="relative z-10 max-w-[40px] max-h-[40px] w-auto h-auto object-contain"
-                  style={{ filter: "hue-rotate(40deg) saturate(1.4)" }}
                 />
               </div>
               <div>

@@ -27,7 +27,10 @@ export default function RootLayout({
         />
         <link rel="shortcut icon" href={config.site.favicon} />
         <meta name="theme-name" content="NextSpace" />
-        <meta name="msapplication-TileColor" content="#000000" />
+        <meta
+          name="msapplication-TileColor"
+          content={theme.colors.default.theme_color.secondary}
+        />
         <meta
           name="theme-color"
           media="(prefers-color-scheme: light)"
@@ -36,7 +39,7 @@ export default function RootLayout({
         <meta
           name="theme-color"
           media="(prefers-color-scheme: dark)"
-          content="#000"
+          content={theme.colors.default.theme_color.dark}
         />
         <link
           rel="preconnect"

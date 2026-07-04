@@ -43,8 +43,8 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <ImageFallback
               src={config.site.logo_footer}
-              width={200}
-              height={50}
+              width={56}
+              height={56}
               alt="Logo"
               className="mb-4"
               loading="lazy"

@@ -55,11 +55,11 @@ export default function CalendarSidebar() {
             {/* Clock */}
             <div className="flex items-center gap-2">
               <div className="font-mono font-bold">
-                <span className="text-emerald-400 text-lg">{time.h}</span>
-                <span className="text-emerald-400 text-lg animate-pulse">
+                <span className="text-secondary text-lg">{time.h}</span>
+                <span className="text-secondary text-lg animate-pulse">
                   :
                 </span>
-                <span className="text-emerald-400 text-lg">{time.m}</span>
+                <span className="text-secondary text-lg">{time.m}</span>
                 <span className="text-slate-500 text-sm">:{time.s}</span>
               </div>
               <div className="hidden md:block text-[10px] leading-tight text-slate-400">
@@ -94,20 +94,20 @@ export default function CalendarSidebar() {
           {calendarInfo && (
             <div className="flex items-center gap-3 md:gap-6">
               {/* Văn Lang - Thông tin chính */}
-              <div className="flex items-center gap-2 md:gap-3 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-3 md:px-4 py-1">
+              <div className="flex items-center gap-2 md:gap-3 bg-secondary/10 border border-secondary/30 rounded-full px-3 md:px-4 py-1">
                 <div className="text-center">
-                  <div className="text-[8px] md:text-[10px] text-emerald-400/80 uppercase font-semibold tracking-wide">
+                  <div className="text-[8px] md:text-[10px] text-secondary/80 uppercase font-semibold tracking-wide">
                     Văn Lang
                   </div>
-                  <div className="text-xl md:text-2xl font-bold text-emerald-400 leading-none">
+                  <div className="text-xl md:text-2xl font-bold text-secondary leading-none">
                     {calendarInfo.vanLang.month === 0
                       ? calendarInfo.vanLang.dayOfYear
                       : calendarInfo.vanLang.day.toString().padStart(2, "0")}
                   </div>
                 </div>
-                <div className="hidden sm:block w-px h-8 bg-emerald-500/30" />
+                <div className="hidden sm:block w-px h-8 bg-secondary/30" />
                 <div className="hidden sm:block text-xs leading-tight">
-                  <div className="text-emerald-300 font-bold">
+                  <div className="text-secondary font-bold">
                     {calendarInfo.vanLang.month === 0
                       ? calendarInfo.vanLang.monthName
                       : `Tháng ${calendarInfo.vanLang.monthName} (${
@@ -117,7 +117,7 @@ export default function CalendarSidebar() {
                   <div className="text-slate-400 text-[10px]">
                     Năm {calendarInfo.vanLang.yearCanChi}
                   </div>
-                  <div className="text-emerald-400/70 text-[10px]">
+                  <div className="text-secondary/70 text-[10px]">
                     {calendarInfo.vanLang.month === 0 ? (
                       <>Ngày {calendarInfo.vanLang.dayOfYear}</>
                     ) : (
@@ -133,12 +133,12 @@ export default function CalendarSidebar() {
               </div>
 
               {/* Con Nước - Thông tin chính */}
-              <div className="flex items-center gap-2 md:gap-3 bg-cyan-500/10 border border-cyan-500/30 rounded-full px-3 md:px-4 py-1">
+              <div className="flex items-center gap-2 md:gap-3 bg-gold/10 border border-gold/30 rounded-full px-3 md:px-4 py-1">
                 <div className="text-center">
-                  <div className="text-[8px] md:text-[10px] text-cyan-400/80 uppercase font-semibold tracking-wide">
+                  <div className="text-[8px] md:text-[10px] text-gold/80 uppercase font-semibold tracking-wide">
                     Con Nước
                   </div>
-                  <div className="text-xl md:text-2xl font-bold text-cyan-400 leading-none">
+                  <div className="text-xl md:text-2xl font-bold text-gold leading-none">
                     {(() => {
                       const dayMatch =
                         calendarInfo.vanLang.conNuoc.name.match(/\d+/);
@@ -146,9 +146,9 @@ export default function CalendarSidebar() {
                     })()}
                   </div>
                 </div>
-                <div className="hidden sm:block w-px h-8 bg-cyan-500/30" />
+                <div className="hidden sm:block w-px h-8 bg-gold/30" />
                 <div className="hidden sm:block text-xs leading-tight">
-                  <div className="text-cyan-300 font-bold">
+                  <div className="text-gold font-bold">
                     {calendarInfo.vanLang.conNuoc.phase}
                   </div>
                   <div className="text-slate-400 text-[10px]">
@@ -158,7 +158,7 @@ export default function CalendarSidebar() {
                           .padStart(2, "0")}/Th.${calendarInfo.vanLang.month}`
                       : calendarInfo.vanLang.monthName}
                   </div>
-                  <div className="text-cyan-400/70 text-[10px]">
+                  <div className="text-gold/70 text-[10px]">
                     {calendarInfo.vanLang.conNuoc.desc.split(" - ")[1] || ""}
                   </div>
                 </div>
@@ -169,7 +169,7 @@ export default function CalendarSidebar() {
           {/* Right: Link */}
           <Link
             href="/lich-van-nien"
-            className="bg-emerald-500 hover:bg-emerald-400 text-white px-3 md:px-4 py-1.5 rounded-full font-semibold text-xs transition-all whitespace-nowrap"
+            className="bg-secondary hover:opacity-90 text-white px-3 md:px-4 py-1.5 rounded-full font-semibold text-xs transition-all whitespace-nowrap"
           >
             <span className="hidden md:inline">Xem chi tiết</span>
             <span className="md:hidden">→</span>
