@@ -4,12 +4,11 @@ import SeoMeta from "@/partials/SeoMeta";
 import Link from "next/link";
 
 const LienHePage = () => {
-  // Nội dung cho Trung tâm Điện ảnh và Truyền hình Sài Gòn
   const pageContent = {
     title: "Liên Hệ Hợp Tác",
-    meta_title: "Liên Hệ | Trung Tâm Điện Ảnh và Truyền Hình Sài Gòn",
+    meta_title: "Liên Hệ | SaigonCert",
     description:
-      "Hãy liên hệ với chúng tôi để được tư vấn về các giải pháp truyền thông, sản xuất phim, quảng cáo và marketing online hiệu quả cho doanh nghiệp của bạn.",
+      "Hãy liên hệ với chúng tôi để được tư vấn về chứng nhận Halal, ISO 9001, ISO 14001, hợp quy và giám định hàng hóa cho doanh nghiệp của bạn.",
   };
 
   // Thông tin liên hệ
@@ -150,7 +149,7 @@ const LienHePage = () => {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Trung tâm Điện ảnh và Truyền hình Sài Gòn - Bản đồ"
+              title="SaigonCert - Bản đồ"
             />
           </div>
         </div>

@@ -36,8 +36,8 @@
 
   "footer_button": {
     "enable": true,
-    "label": "Get Started",
-    "link": "/contact"
+    "label": "Liên hệ ngay",
+    "link": "/lien-he"
   },
 
   "google_tag_manager": {

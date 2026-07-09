@@ -20,6 +20,9 @@
  *   requires either this token or matching applicant ownership before
  *   allowing POST /api/upload to proceed (IDOR fix).
  * - me: returns only the current applicant's own submissions.
+ * - partnerList: read-only, Halal-only feed for the Malaysia-partner role
+ *   (see backend-halal/src/index.ts PARTNER_MALAYSIA_PERMISSIONS) — no
+ *   other role is granted this action.
  */
 import { factories } from '@strapi/strapi';
 import crypto from 'crypto';
@@ -47,6 +50,14 @@ export default factories.createCoreController(
       const body = ctx.request.body as any;
       if (body?.recaptchaToken !== undefined) {
         delete body.recaptchaToken;
+      }
+      // Audit fields are staff-only, set later via the admin panel — strip
+      // them here so a client can't self-report a site visit / audit result
+      // on initial submission. auditorName/auditNotes/auditReport are also
+      // schema-private (blocked either way); siteVisitDate isn't, since it
+      // must stay public-readable for /me and /partner-list.
+      for (const field of ['siteVisitDate', 'auditorName', 'auditNotes', 'auditReport']) {
+        if (body?.data?.[field] !== undefined) delete body.data[field];
       }
 
       const response: any = await super.create(ctx);
@@ -77,6 +88,16 @@ export default factories.createCoreController(
 
       const entries = await strapi.documents('api::certification-application.certification-application').findMany({
         filters: { applicant: { id: ctx.state.user.id } },
+        sort: { createdAt: 'desc' },
+        populate: [],
+      });
+      const sanitized = await this.sanitizeOutput(entries, ctx);
+      return this.transformResponse(sanitized);
+    },
+
+    async partnerList(ctx) {
+      const entries = await strapi.documents('api::certification-application.certification-application').findMany({
+        filters: { category: 'Chứng nhận Halal' },
         sort: { createdAt: 'desc' },
         populate: [],
       });

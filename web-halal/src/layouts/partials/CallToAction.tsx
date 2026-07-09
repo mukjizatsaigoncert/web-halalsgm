@@ -22,7 +22,7 @@ const CallToAction = ({
             isNoSectionBottom && "pb-0"
           }`}
         >
-          <div className="bg-[url(/images/call-to-action.png)] bg-cover bg-center section md:h-[600px] lg:h-[890px]">
+          <div className="bg-linear-to-br from-secondary to-[#0a3018] section md:h-[600px] lg:h-[890px]">
             <div className="container">
               <div className="flex flex-col lg:flex-row max-lg:items-center max-lg:text-center lg:justify-between gap-6 lg:gap-14">
                 <h2

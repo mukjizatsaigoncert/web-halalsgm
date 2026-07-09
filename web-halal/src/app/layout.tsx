@@ -16,7 +16,7 @@ export default function RootLayout({
   const fontHref = `https://fonts.googleapis.com/css2?family=${pf}&display=swap`;
 
   return (
-    <html suppressHydrationWarning={true} lang="en">
+    <html suppressHydrationWarning={true} lang="vi">
       {config.google_tag_manager.enable && (
         <GoogleTagManager gtmId={config.google_tag_manager.gtm_id} />
       )}
@@ -26,7 +26,6 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
         <link rel="shortcut icon" href={config.site.favicon} />
-        <meta name="theme-name" content="NextSpace" />
         <meta
           name="msapplication-TileColor"
           content={theme.colors.default.theme_color.secondary}

@@ -12,11 +12,8 @@ const PageHeader = ({
     <section>
       <div className="text-center">
         <div
-          className={`${isContactPage ? "h-[400px] lg:h-[650px]" : "pt-[240px] pb-[140px]"} bg-[url(/images/custom/anh1.jpg)] bg-cover bg-center bg-no-repeat relative`}
+          className={`${isContactPage ? "h-[400px] lg:h-[650px]" : "pt-[240px] pb-[140px]"} bg-linear-to-br from-secondary to-[#0a3018] relative`}
         >
-          {/* Dark overlay để text nổi bật hơn */}
-          <div className="absolute inset-0 bg-black/50"></div>
-
           {!isContactPage && (
             <div className="relative z-10">
               <h1

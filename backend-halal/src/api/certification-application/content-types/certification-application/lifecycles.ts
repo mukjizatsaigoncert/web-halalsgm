@@ -76,11 +76,16 @@ export default {
     const application = event.result;
     const label = STATUS_LABELS[newStatus] ?? newStatus;
 
+    const siteVisitLine =
+      newStatus === 'site_visit_scheduled' && application.siteVisitDate
+        ? `\n\nNgày khảo sát thực địa dự kiến: ${new Date(application.siteVisitDate).toLocaleDateString('vi-VN')}.`
+        : '';
+
     await sendStatusEmail(
       strapi,
       application.email,
       `Cập nhật hồ sơ chứng nhận Halal — ${label}`,
-      `Xin chào ${application.contactName},\n\nHồ sơ đăng ký chứng nhận Halal của "${application.companyName}" vừa được cập nhật trạng thái: ${label}.\n\nTrân trọng,\nSaigonCert`
+      `Xin chào ${application.contactName},\n\nHồ sơ đăng ký chứng nhận Halal của "${application.companyName}" vừa được cập nhật trạng thái: ${label}.${siteVisitLine}\n\nTrân trọng,\nSaigonCert`
     );
 
     if (newStatus === 'approved') {

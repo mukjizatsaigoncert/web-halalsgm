@@ -100,14 +100,35 @@ const AUTHENTICATED_PERMISSIONS: Record<string, string[]> = {
   'plugin::upload.content-api': ['upload'],
 };
 
+/**
+ * Permissions map applied to the custom `partner_malaysia` role on every
+ * boot — a single shared account for the Malaysia-side contact to track
+ * Halal-category submissions. Read-only, scoped to one custom action
+ * (`partnerList`, filtered server-side to Halal in the controller); no
+ * other permissions are granted, so this role can't read anything else in
+ * the system (certificates are already public `find`/`findOne`, so no
+ * grant is needed here for those).
+ */
+const PARTNER_MALAYSIA_PERMISSIONS: Record<string, string[]> = {
+  'api::certification-application.certification-application': ['partnerList'],
+};
+
 async function syncRolePermissions(
   strapi: Core.Strapi,
-  roleType: 'public' | 'authenticated',
-  permissionsMap: Record<string, string[]>
+  roleType: string,
+  permissionsMap: Record<string, string[]>,
+  createIfMissing?: { name: string; description: string }
 ) {
-  const role = await strapi.db
+  let role = await strapi.db
     .query('plugin::users-permissions.role')
     .findOne({ where: { type: roleType } });
+
+  if (!role && createIfMissing) {
+    role = await strapi.db.query('plugin::users-permissions.role').create({
+      data: { type: roleType, ...createIfMissing },
+    });
+    strapi.log.info(`[bootstrap] Created role "${roleType}"`);
+  }
 
   if (!role) {
     strapi.log.warn(`[bootstrap] Role "${roleType}" not found; skipping permission sync`);
@@ -183,6 +204,10 @@ export default {
     initSentry(strapi);
     await syncRolePermissions(strapi, 'public', PUBLIC_PERMISSIONS);
     await syncRolePermissions(strapi, 'authenticated', AUTHENTICATED_PERMISSIONS);
+    await syncRolePermissions(strapi, 'partner_malaysia', PARTNER_MALAYSIA_PERMISSIONS, {
+      name: 'Đối tác Malaysia',
+      description: 'Xem hồ sơ và chứng chỉ Halal (chỉ đọc)',
+    });
     registerCacheInvalidation(strapi);
   },
 };

@@ -65,6 +65,23 @@
       "enum": ["submitted", "under_review", "site_visit_scheduled", "approved", "rejected"],
       "default": "submitted"
     },
+    "siteVisitDate": {
+      "type": "date"
+    },
+    "auditorName": {
+      "type": "string",
+      "private": true
+    },
+    "auditNotes": {
+      "type": "text",
+      "private": true
+    },
+    "auditReport": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": ["images", "files"],
+      "private": true
+    },
     "applicant": {
       "type": "relation",
       "relation": "manyToOne",

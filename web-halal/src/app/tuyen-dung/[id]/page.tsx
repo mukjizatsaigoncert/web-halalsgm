@@ -1,3 +1,4 @@
+import config from "@/config/config.json";
 import {
   fetchCareerById,
   fetchAllCareerIds,
@@ -41,7 +42,7 @@ const TuyenDungDetailPage = async ({ params }: PageProps) => {
     <>
       <SeoMeta
         title={`${career.name} | Tuyển Dụng`}
-        meta_title={`${career.name} | Tuyển Dụng - Trung Tâm Điện Ảnh và Truyền Hình Sài Gòn`}
+        meta_title={`${career.name} | Tuyển Dụng - SaigonCert`}
         description={career.description || `Ứng tuyển vị trí ${career.name}`}
       />
       <PageHeader title={career.name} />
@@ -208,7 +209,7 @@ const TuyenDungDetailPage = async ({ params }: PageProps) => {
                   <div className="flex gap-2">
                     <Link
                       href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                        `https://example.com/tuyen-dung/${id}`
+                        `${config.site.base_url}/tuyen-dung/${id}`
                       )}`}
                       target="_blank"
                       className="flex-1 bg-blue-600 text-white text-center py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
@@ -217,7 +218,7 @@ const TuyenDungDetailPage = async ({ params }: PageProps) => {
                     </Link>
                     <Link
                       href={`https://zalo.me/share?url=${encodeURIComponent(
-                        `https://example.com/tuyen-dung/${id}`
+                        `${config.site.base_url}/tuyen-dung/${id}`
                       )}`}
                       target="_blank"
                       className="flex-1 bg-blue-500 text-white text-center py-2 rounded-lg text-sm hover:bg-blue-600 transition-colors"

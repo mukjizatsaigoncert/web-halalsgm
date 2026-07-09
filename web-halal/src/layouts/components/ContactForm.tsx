@@ -145,7 +145,7 @@ export default function ContactForm({ title, description }: ContactFormProps) {
           id="subject"
           name="subject"
           className="form-input"
-          placeholder="Tư vấn dịch vụ sản xuất phim"
+          placeholder="Tư vấn chứng nhận Halal cho sản phẩm của bạn"
           type="text"
           required
           disabled={isSubmitting}

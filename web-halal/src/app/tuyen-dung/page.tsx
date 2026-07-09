@@ -14,9 +14,9 @@ const TuyenDungPage = async () => {
   // Nội dung trang
   const pageContent = {
     title: "Tuyển Dụng",
-    meta_title: "Tuyển Dụng | Trung Tâm Điện Ảnh và Truyền Hình Sài Gòn",
+    meta_title: "Tuyển Dụng | SaigonCert",
     description:
-      "Gia nhập đội ngũ của chúng tôi - Nơi bạn có thể phát triển sự nghiệp trong lĩnh vực truyền thông, sản xuất phim và quảng cáo.",
+      "Gia nhập đội ngũ của chúng tôi - Nơi bạn có thể phát triển sự nghiệp trong lĩnh vực chứng nhận Halal, ISO và giám định hàng hóa.",
   };
 
   // Thông tin liên hệ tuyển dụng
@@ -50,10 +50,9 @@ const TuyenDungPage = async () => {
                   Cơ Hội Nghề Nghiệp Tại Chúng Tôi
                 </h2>
                 <p className="text-lg text-body-color mb-8 leading-relaxed">
-                  Trung tâm Điện ảnh và Truyền hình Sài Gòn luôn tìm kiếm những
-                  nhân tài có đam mê trong lĩnh vực truyền thông, sản xuất nội
-                  dung số và marketing. Hãy gia nhập đội ngũ của chúng tôi để
-                  cùng nhau phát triển!
+                  SaigonCert luôn tìm kiếm những nhân tài có đam mê trong lĩnh
+                  vực chứng nhận Halal, ISO và giám định hàng hóa. Hãy gia
+                  nhập đội ngũ của chúng tôi để cùng nhau phát triển!
                 </p>
 
                 {/* Thông tin liên hệ HR */}

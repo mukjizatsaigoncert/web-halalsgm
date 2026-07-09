@@ -33,6 +33,7 @@ export interface MyApplication {
   applicationType: "domestic" | "international";
   applicationStatus: string;
   createdAt: string;
+  siteVisitDate?: string;
 }
 
 export async function fetchMyApplications(jwt: string): Promise<MyApplication[]> {
@@ -46,6 +47,29 @@ export async function fetchMyApplications(jwt: string): Promise<MyApplication[]>
     return json.data ?? [];
   } catch {
     return [];
+  }
+}
+
+export interface PartnerApplicationsResult {
+  ok: boolean;
+  data: MyApplication[];
+}
+
+// Read-only Halal-only feed for the Malaysia-partner account (role
+// `partner_malaysia` — see backend-halal/src/index.ts). Distinguishes a 403
+// (wrong role) from an empty result so the page can show "not authorized"
+// instead of a misleading empty table.
+export async function fetchPartnerHalalApplications(jwt: string): Promise<PartnerApplicationsResult> {
+  try {
+    const res = await fetch(`${STRAPI_URL}/api/certification-applications/partner-list`, {
+      headers: { Authorization: `Bearer ${jwt}` },
+      cache: "no-store",
+    });
+    if (!res.ok) return { ok: false, data: [] };
+    const json = await res.json();
+    return { ok: true, data: json.data ?? [] };
+  } catch {
+    return { ok: false, data: [] };
   }
 }
 

@@ -1,27 +1,16 @@
 "use client";
 
+import ApplicationStatusStepper from "@/components/ApplicationStatusStepper";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { fetchMyApplications, MyApplication } from "@/lib/strapi/api/certification";
+import PageHeader from "@/partials/PageHeader";
+import SeoMeta from "@/partials/SeoMeta";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const STATUS_LABELS: Record<string, string> = {
-  submitted: "Đã tiếp nhận",
-  under_review: "Đang xem xét",
-  site_visit_scheduled: "Đã lên lịch khảo sát",
-  approved: "Đã phê duyệt",
-  rejected: "Không chấp thuận",
-};
-
-const STATUS_CLASSES: Record<string, string> = {
-  submitted: "bg-secondary/10 text-secondary border border-secondary/30",
-  under_review: "bg-gold/10 text-gold border border-gold/30",
-  site_visit_scheduled: "bg-gold/10 text-gold border border-gold/30",
-  approved: "bg-green-500/10 text-green-700 border border-green-400/30",
-  rejected: "bg-red-500/10 text-red-700 border border-red-400/30",
-};
+import { FiFileText, FiLogOut } from "react-icons/fi";
 
 function formatDate(value: string) {
   try {
@@ -29,6 +18,16 @@ function formatDate(value: string) {
   } catch {
     return value;
   }
+}
+
+function ApplicationCardSkeleton() {
+  return (
+    <div className="bg-white rounded-2xl border border-border p-6 animate-pulse">
+      <div className="h-5 w-2/5 rounded bg-light" />
+      <div className="mt-3 h-3.5 w-3/5 rounded bg-light" />
+      <div className="mt-6 h-6 w-full rounded bg-light" />
+    </div>
+  );
 }
 
 export default function HoSoCuaToiPage() {
@@ -45,63 +44,87 @@ export default function HoSoCuaToiPage() {
     fetchMyApplications(jwt).then(setApplications);
   }, [loading, jwt, router]);
 
-  if (loading || (jwt && applications === null)) {
-    return (
-      <section className="py-24 md:py-28">
-        <div className="container mx-auto px-4 max-w-3xl text-center text-text/60">
-          Đang tải...
-        </div>
-      </section>
-    );
-  }
-
-  if (!jwt) return null;
+  if (!jwt && !loading) return null;
 
   return (
-    <section className="py-24 md:py-28">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="font-bold text-dark text-3xl">Hồ sơ của tôi</h1>
-            <p className="text-text/60 text-sm mt-1">{user?.email}</p>
+    <>
+      <SeoMeta title="Hồ sơ của tôi" noindex />
+      <PageHeader title="Hồ sơ của tôi" />
+      <section className="py-16 md:py-20">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <div className="flex items-center justify-between mb-8">
+            <p className="text-text/70 text-sm">
+              {user ? (
+                <>
+                  Xin chào, <span className="font-semibold text-dark">{user.email}</span>
+                </>
+              ) : (
+                " "
+              )}
+            </p>
+            <button
+              onClick={logout}
+              className="flex items-center gap-1.5 text-sm font-semibold text-secondary hover:underline"
+            >
+              <FiLogOut className="h-4 w-4" />
+              Đăng xuất
+            </button>
           </div>
-          <button
-            onClick={logout}
-            className="text-sm font-semibold text-secondary hover:underline"
-          >
-            Đăng xuất
-          </button>
-        </div>
 
-        {applications && applications.length === 0 && (
-          <p className="text-text/60 text-sm">Bạn chưa nộp hồ sơ nào.</p>
-        )}
+          {(loading || applications === null) && (
+            <div className="space-y-4">
+              <ApplicationCardSkeleton />
+              <ApplicationCardSkeleton />
+            </div>
+          )}
 
-        {applications && applications.length > 0 && (
-          <ul className="space-y-4">
-            {applications.map((app) => (
-              <li
-                key={app.documentId}
-                className="bg-white rounded-2xl border border-border p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          {applications && applications.length === 0 && (
+            <div className="bg-white rounded-2xl border border-border p-12 text-center">
+              <FiFileText className="mx-auto h-10 w-10 text-secondary/40" />
+              <p className="mt-4 font-bold text-dark text-lg">Bạn chưa nộp hồ sơ nào</p>
+              <p className="mt-1 text-text/60 text-sm">
+                Nộp hồ sơ chứng nhận Halal để bắt đầu theo dõi tiến độ tại đây.
+              </p>
+              <Link
+                href="/nop-ho-so-chung-nhan"
+                className="mt-6 inline-block bg-secondary text-white font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
               >
-                <div>
+                Nộp hồ sơ ngay
+              </Link>
+            </div>
+          )}
+
+          {applications && applications.length > 0 && (
+            <ul className="space-y-4">
+              {applications.map((app) => (
+                <li
+                  key={app.documentId}
+                  className="bg-white rounded-2xl border border-border p-6"
+                >
                   <p className="font-bold text-dark text-lg">{app.companyName}</p>
                   <p className="text-text/60 text-sm mt-1">{app.category}</p>
                   <p className="text-text/60 text-sm">
                     Nộp ngày {formatDate(app.createdAt)} —{" "}
                     {app.applicationType === "domestic" ? "Doanh nghiệp trong nước" : "Doanh nghiệp quốc tế"}
                   </p>
-                </div>
-                <span
-                  className={`inline-block text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap ${STATUS_CLASSES[app.applicationStatus]}`}
-                >
-                  {STATUS_LABELS[app.applicationStatus] ?? app.applicationStatus}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </section>
+                  {app.siteVisitDate && (
+                    <p className="text-text/60 text-sm">
+                      Lịch khảo sát: {formatDate(app.siteVisitDate)}
+                    </p>
+                  )}
+
+                  <div className="mt-6">
+                    <ApplicationStatusStepper
+                      status={app.applicationStatus}
+                      siteVisitDate={app.siteVisitDate}
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

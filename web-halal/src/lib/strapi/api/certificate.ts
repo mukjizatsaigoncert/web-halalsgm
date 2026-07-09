@@ -37,3 +37,24 @@ export async function searchCertificates(
     return [];
   }
 }
+
+// All issued Halal certificates, newest first — for the Malaysia-partner
+// dashboard. Unlike searchCertificates(), no query is required; certificates
+// are public find/findOne data already, so this is an anonymous fetch.
+export async function fetchHalalCertificates(): Promise<Certificate[]> {
+  const params = new URLSearchParams();
+  params.set("filters[category][$eq]", "Chứng nhận Halal");
+  params.set("pagination[pageSize]", "100");
+  params.set("sort[0]", "issuedDate:desc");
+
+  const url = `${getStrapiInternalUrl()}/api/certificates?${params.toString()}`;
+
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return (json.data ?? []) as Certificate[];
+  } catch {
+    return [];
+  }
+}
