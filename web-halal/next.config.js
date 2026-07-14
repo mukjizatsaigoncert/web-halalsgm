@@ -1,4 +1,5 @@
 const config = require("./src/config/config.json");
+const strapiOrigin = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
 // R2 public URL may be a custom domain (e.g. https://uploads.halalsgm.vn) or
 // the default R2.dev subdomain.  Extract hostname for remotePatterns.
@@ -29,7 +30,8 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       "base-uri 'self'",
-      "frame-ancestors 'none'",
+      // Strapi's preview panel embeds the frontend in an iframe.
+      `frame-ancestors 'self' ${strapiOrigin}`,
       "object-src 'none'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
@@ -56,7 +58,13 @@ const nextConfig = {
   // rewrites that into .next/browser/*, which doesn't exist server-side and
   // crashes every page that renders humanize()/markdownify() (textConverter.ts).
   // Marking it external makes Next require it natively from node_modules instead.
-  serverExternalPackages: ["jsdom", "isomorphic-dompurify"],
+  serverExternalPackages: [
+    "jsdom",
+    "isomorphic-dompurify",
+    // OpenTelemetry discovers Node instrumentations with a dynamic require.
+    // Keep it server-side so Webpack does not try to statically resolve it.
+    "@opentelemetry/instrumentation",
+  ],
   images: {
     remotePatterns: [
       // Dev: Next.js image optimizer fetches from localhost:1337 (host-exposed port)

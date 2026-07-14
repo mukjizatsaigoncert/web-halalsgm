@@ -7,6 +7,21 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci --prefer-offline --no-audit --no-fund
 
+# ---------- development ----------
+# docker-compose.dev.yml bind-mounts source while node_modules remains in a
+# named volume, avoiding host/Alpine native-module incompatibilities.
+FROM deps AS development
+RUN apk add --no-cache tini curl
+WORKDIR /app
+ENV NODE_ENV=development \
+    HOST=0.0.0.0 \
+    PORT=1337
+EXPOSE 1337
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD curl -fsS http://localhost:1337/api/health || exit 1
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["npm", "run", "dev"]
+
 # ---------- build (compile admin panel + TS sources) ----------
 FROM node:20-alpine AS build
 RUN apk add --no-cache libc6-compat vips-dev

@@ -82,6 +82,9 @@ services:
       CORS_ORIGINS: ${CORS_ORIGINS:-https://halalsgm.vn}
       RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY:-}
       RECAPTCHA_MIN_SCORE: ${RECAPTCHA_MIN_SCORE:-0.5}
+      # Strapi Content Manager preview (same frontend origin and shared secret).
+      CLIENT_URL: ${NEXT_PUBLIC_SITE_URL:-https://halalsgm.vn}
+      PREVIEW_SECRET: ${PREVIEW_SECRET:-}
       # --- Observability (optional) ---
       SENTRY_DSN: ${BACKEND_SENTRY_DSN:-}
       SENTRY_ENV: ${SENTRY_ENV:-production}
@@ -127,6 +130,7 @@ services:
       STRAPI_INTERNAL_URL: "http://backend:1337"
       # Shared secret for Strapi → Next.js cache revalidation webhook
       REVALIDATE_SECRET: ${REVALIDATE_SECRET:?REVALIDATE_SECRET is required}
+      PREVIEW_SECRET: ${PREVIEW_SECRET:-}
       # Sentry runtime options (only used if DSN is set).
       SENTRY_DSN: ${FRONTEND_SENTRY_DSN:-}
       SENTRY_ENV: ${SENTRY_ENV:-production}

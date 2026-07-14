@@ -5,12 +5,28 @@
 
 # ---------- deps ----------
 FROM node:20-alpine AS deps
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat && corepack enable
 WORKDIR /app
 COPY package.json package-lock.json* yarn.lock* ./
 RUN if [ -f yarn.lock ]; then yarn install --frozen-lockfile; \
     elif [ -f package-lock.json ]; then npm ci --prefer-offline --no-audit --no-fund; \
     else npm install; fi
+
+# ---------- development ----------
+# docker-compose.dev.yml bind-mounts the source tree over /app and preserves
+# these Linux-built dependencies in a named volume for Fast Refresh.
+FROM deps AS development
+RUN apk add --no-cache tini curl
+WORKDIR /app
+ENV NODE_ENV=development \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD curl -fsS http://localhost:3000/api/health || exit 1
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["yarn", "dev"]
 
 # ---------- build ----------
 FROM node:20-alpine AS build

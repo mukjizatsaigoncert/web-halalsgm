@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hero_sliders",
+  "info": {
+    "singularName": "hero-slider",
+    "pluralName": "hero-sliders",
+    "displayName": "Hero Slider",
+    "description": "Hero slider images and content for homepage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "tag": {
+      "type": "string",
+      "required": false
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "subheading": {
+      "type": "string",
+      "required": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

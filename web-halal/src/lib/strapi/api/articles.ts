@@ -1,4 +1,5 @@
 import { StrapiBlock } from "../model/block.model";
+import { draftMode } from "next/headers";
 
 // Strapi API utilities
 // NEXT_PUBLIC_STRAPI_URL: public-facing URL (browser + CDN), e.g. https://api.halalsgm.vn
@@ -19,16 +20,13 @@ export function getStrapiInternalUrl(): string {
  * Build image URL from a Strapi media url field.
  *
  * - Absolute URL (CDN, Strapi Cloud): used as-is
- * - Relative path (/uploads/...): prepend STRAPI_URL so the browser fetches
- *   directly from api.halalsgm.vn/uploads/ → Cloudflare CDN (30-day cache via nginx).
- *   Next.js image optimiser running server-side uses the next.config.js rewrite
- *   (/uploads/* → STRAPI_INTERNAL_URL) to reach the backend over Docker's
- *   internal network without going through the public internet.
+ * - Relative path (/uploads/...): keep it relative so Next.js routes the image
+ *   through its /uploads rewrite to the Strapi Docker service.
  */
 export function buildStrapiImageUrl(url: string | undefined | null): string {
   if (!url) return "/images/image-placeholder.png";
   if (url.startsWith("http")) return url;
-  return `${STRAPI_URL}${url}`; // e.g. https://api.halalsgm.vn/uploads/xxx.jpg
+  return url;
 }
 
 // Interface cho media/image từ Strapi V5
@@ -123,7 +121,9 @@ export async function fetchFromStrapi<T = any>(
     const response = await fetch(fullUrl, {
       // Default: cache tag-based revalidation + time-based fallback (60s).
       // Pass `options` last so callers can override tags/revalidate per call.
-      next: { revalidate: 60, tags: ['strapi-content'] },
+      ...(options?.cache === 'no-store'
+        ? {}
+        : { next: { revalidate: 60, tags: ['strapi-content'] } }),
       ...options,
     });
 
@@ -282,6 +282,43 @@ export async function fetchRelatedArticles(
         },
       },
     };
+  }
+}
+
+// Interface cho hero-slider từ Strapi
+export interface StrapiHeroSlider {
+  id: number;
+  documentId: string;
+  tag: string;
+  heading: string;
+  subheading: string;
+  image: StrapiMedia | null;
+  order: number;
+}
+
+export interface StrapiHeroSliderResponse {
+  data: StrapiHeroSlider[];
+  meta: {
+    pagination?: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
+
+export async function fetchHeroSliders(): Promise<StrapiHeroSlider[]> {
+  try {
+    const { isEnabled: isPreview } = await draftMode();
+    const data = await fetchFromStrapi<StrapiHeroSliderResponse>(
+      `hero-sliders?populate=image&sort=order:asc&pagination[pageSize]=10${isPreview ? '&status=draft' : ''}`,
+      isPreview ? { cache: 'no-store' } : undefined,
+    );
+    return data.data;
+  } catch (error) {
+    console.error(`❌ [fetchHeroSliders] Error:`, error);
+    return [];
   }
 }
 

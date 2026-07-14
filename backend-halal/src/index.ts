@@ -24,6 +24,7 @@ const CACHED_UIDS = [
   'api::about.about',
   'api::global.global',
   'api::career.career',
+  'api::hero-slider.hero-slider',
 ];
 
 function registerCacheInvalidation(strapi: Core.Strapi) {
@@ -84,6 +85,7 @@ const PUBLIC_PERMISSIONS: Record<string, string[]> = {
   'api::author.author': ['find', 'findOne'],
   'api::about.about': ['find'],
   'api::global.global': ['find'],
+  'api::hero-slider.hero-slider': ['find', 'findOne'],
 };
 
 /**
@@ -196,6 +198,31 @@ function assertProductionSecrets(strapi: Core.Strapi) {
   }
 }
 
+async function syncI18nLocales(strapi: Core.Strapi) {
+  const existingLocales = await strapi.db
+    .query('plugin::i18n.locale')
+    .findMany({});
+
+  const desiredLocales = [
+    { code: 'vi', name: 'Vietnamese', isDefault: true },
+    { code: 'en', name: 'English', isDefault: false },
+  ];
+
+  for (const locale of desiredLocales) {
+    const existing = existingLocales.find((l: any) => l.code === locale.code);
+    if (!existing) {
+      await strapi.db.query('plugin::i18n.locale').create({
+        data: {
+          code: locale.code,
+          name: locale.name,
+          isDefault: locale.isDefault,
+        },
+      });
+      strapi.log.info(`[bootstrap] Created i18n locale: ${locale.name} (${locale.code})`);
+    }
+  }
+}
+
 export default {
   register(/* { strapi }: { strapi: Core.Strapi } */) {},
 
@@ -209,5 +236,6 @@ export default {
       description: 'Xem hồ sơ và chứng chỉ Halal (chỉ đọc)',
     });
     registerCacheInvalidation(strapi);
+    await syncI18nLocales(strapi);
   },
 };

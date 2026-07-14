@@ -2,14 +2,10 @@
 #   docker compose -f docker-compose.yml -f docker-compose.dev.yml up
 #
 # Differences vs prod:
-#  - Expose backend (1337) and frontend (3000) directly to the host
-#  - Relax CORS to localhost
-#  - Skip nginx (comment out reference in compose up)
-#
-# No source bind-mounts / hot-reload here — both images are the same
-# production multi-stage build as docker-compose.yml. After code changes,
-# rerun with --build. For a live-reload loop, run `npm run dev` /
-# `yarn dev` directly on the host instead of through Docker.
+#  - Expose backend (1337) and frontend (3000) directly to the host.
+#  - Use development image targets with bind-mounted source and hot reload.
+#  - Keep Linux node_modules in named volumes rather than using host modules.
+#  - Relax CORS to localhost and do not start nginx.
 
 services:
   postgres:
@@ -21,19 +17,36 @@ services:
       - "6379:6379"
 
   backend:
+    build:
+      target: development
     ports:
       - "1337:1337"
+    volumes:
+      - ./backend-halal:/app
+      - backend-node-modules:/app/node_modules
     environment:
       NODE_ENV: development
       CORS_ORIGINS: "http://localhost:3001,http://127.0.0.1:3001"
+      # Polling makes edits from Windows/macOS bind mounts reliable.
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "500"
       # Disable Redis cache in dev if you prefer (remove or set to "false" to enable)
       REDIS_CACHE_DISABLED: "false"
+      # The browser reaches the dev frontend through the host-mapped port.
+      CLIENT_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3001}
 
   frontend:
+    build:
+      target: development
     ports:
       - "3001:3000"
+    volumes:
+      - ./web-halal:/app
+      - frontend-node-modules:/app/node_modules
     environment:
       NODE_ENV: development
+      # Needed when Docker Desktop cannot forward host filesystem events.
+      WATCHPACK_POLLING: "true"
       # Server-side fetch uses internal Docker network name
       STRAPI_INTERNAL_URL: "http://backend:1337"
       # In dev you can set a fixed secret or leave a placeholder
@@ -77,4 +90,6 @@ volumes:
   strapi-uploads:
     external: true
     name: halal_strapi-uploads
+  backend-node-modules:
+  frontend-node-modules:
 

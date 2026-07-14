@@ -25,6 +25,7 @@ const UID_TO_TAGS: Record<string, string[]> = {
   "api::about.about": ["strapi-content", "about"],
   "api::global.global": ["strapi-content", "global"],
   "api::career.career": ["strapi-content", "careers"],
+  "api::hero-slider.hero-slider": ["strapi-content", "hero-sliders"],
 };
 
 export async function POST(req: NextRequest) {

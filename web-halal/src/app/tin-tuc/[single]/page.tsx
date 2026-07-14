@@ -7,7 +7,7 @@ import {
   fetchAllArticleSlugs,
   fetchArticleBySlug,
   fetchRelatedArticles,
-  STRAPI_URL,
+  buildStrapiImageUrl,
   transformStrapiArticle,
 } from "@/lib/strapi/api/articles";
 import {
@@ -37,13 +37,17 @@ function renderBlocks(blocks?: StrapiBlock[]) {
     switch (block.__component) {
       case StrapiBlockComponent.RichText: {
         const richTextBlock = block as StrapiBlockRichText;
+        const body = (richTextBlock.body || "").replace(
+          /https?:\/\/(?:localhost|backend):1337(?=\/uploads\/)/g,
+          ""
+        );
         // Dùng markdownify với div=true để parse block elements (headings, lists, etc.)
         return (
           <div
             key={index}
             className="prose prose-lg max-w-none mb-8"
             dangerouslySetInnerHTML={
-              markdownify(richTextBlock.body || "", true) as { __html: string }
+              markdownify(body, true) as { __html: string }
             }
           />
         );
@@ -52,9 +56,7 @@ function renderBlocks(blocks?: StrapiBlock[]) {
       case StrapiBlockComponent.Media: {
         const mediaBlock = block as StrapiBlockMedia;
         if (mediaBlock.file?.url) {
-          const mediaUrl = mediaBlock.file.url.startsWith("http")
-            ? mediaBlock.file.url
-            : `${STRAPI_URL}${mediaBlock.file.url}`;
+          const mediaUrl = buildStrapiImageUrl(mediaBlock.file.url);
 
           return (
             <div key={index} className="mb-8">
@@ -96,9 +98,7 @@ function renderBlocks(blocks?: StrapiBlock[]) {
         if (sliderBlock.files && sliderBlock.files.length > 0) {
           // Transform files to ImageSlider format
           const images = sliderBlock.files.map((file) => ({
-            url: file.url.startsWith("http")
-              ? file.url
-              : `${STRAPI_URL}${file.url}`,
+            url: buildStrapiImageUrl(file.url),
             alt: "",
           }));
 
@@ -162,11 +162,21 @@ const TinTucDetailPage = async (props: {
         image={post.frontmatter.image}
       />
       <section>
-        <div className="bg-primary row justify-center text-center">
+        <div className="relative overflow-hidden bg-primary text-center">
+          {article.cover?.url && (
+            <ImageFallback
+              src={post.frontmatter.image}
+              fill
+              sizes="100vw"
+              alt=""
+              className="object-cover"
+            />
+          )}
+          <div className="absolute inset-0 bg-black/60" />
           <div
             data-aos="zoom-in-sm"
             data-aos-delay="200"
-            className="col-10 xl:col-7 pt-65 pb-40 text-white"
+            className="relative z-10 mx-auto w-10/12 xl:w-7/12 pt-65 pb-40 text-white"
           >
             {post.frontmatter.date && (
               <span>
@@ -184,17 +194,6 @@ const TinTucDetailPage = async (props: {
         <div className="container section-sm pb-0">
           <div className="row justify-center">
             <article className="col-11 mx-auto lg:col-10">
-              {post.frontmatter.image && (
-                <div className="pb-10">
-                  <ImageFallback
-                    src={post.frontmatter.image}
-                    height={800}
-                    width={1200}
-                    alt={post.frontmatter.title}
-                    className="w-full object-cover aspect-video"
-                  />
-                </div>
-              )}
               <div className="content mb-10">
                 {article.blocks && article.blocks.length > 0 ? (
                   renderBlocks(article.blocks)

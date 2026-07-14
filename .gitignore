@@ -30,3 +30,6 @@ nginx/certs/
 *.sql
 *.sql.gz
 backups/
+.vercel
+.env*
+.agents/AGENTS.md

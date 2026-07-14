@@ -8,6 +8,10 @@
  * - upload: Defaults to local disk storage in development.
  *   In production set R2_* env vars to switch to Cloudflare R2
  *   (S3-compatible, served via a custom R2.dev or custom domain).
+ *
+ * - i18n: Enables multi-language content. Vietnamese (vi) is the default
+ *   locale. All localizable content types should have i18n enabled in
+ *   their schema.json pluginOptions.
  */
 export default ({ env }: { env: any }) => {
   // ── Upload provider ──────────────────────────────────────────────────────

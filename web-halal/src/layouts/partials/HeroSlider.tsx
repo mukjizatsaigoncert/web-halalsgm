@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import Image from "next/image";
 import { Swiper } from "swiper";
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -10,10 +11,11 @@ interface Slide {
   tag?: string;
   heading: string;
   subheading?: string;
+  image?: string | null;
 }
 
 interface HeroSliderProps {
-  slides: Slide[];
+  slides: Slide[] | null;
 }
 
 export default function HeroSlider({ slides }: HeroSliderProps) {
@@ -23,7 +25,7 @@ export default function HeroSlider({ slides }: HeroSliderProps) {
   const [activeIdx, setActiveIdx] = useState(0);
 
   useEffect(() => {
-    if (!containerRef.current || slides.length === 0) return;
+    if (!containerRef.current || !slides?.length) return;
 
     swiperRef.current = new Swiper(containerRef.current, {
       modules: [Autoplay, EffectFade, Pagination],
@@ -48,12 +50,33 @@ export default function HeroSlider({ slides }: HeroSliderProps) {
     };
   }, [slides, uniqueId]);
 
+  if (!slides?.length) {
+    return (
+      <section className="pt-16 relative overflow-hidden h-[440px] lg:h-[560px] flex flex-col bg-linear-to-br from-secondary to-[#0a3018]" />
+    );
+  }
+
   const active = slides[activeIdx] ?? slides[0];
 
   return (
-    /* Nền gradient trơn, không hoạ tiết — giữ đơn giản như trang tham chiếu */
-    <section className="pt-16 relative overflow-hidden h-[440px] lg:h-[560px] flex flex-col bg-linear-to-br from-secondary to-[#0a3018]">
-      {/* Swiper — chỉ dùng để giữ nhịp autoplay/pagination cho phần chữ, không còn ảnh nền */}
+    <section className="pt-16 relative overflow-hidden h-[440px] lg:h-[560px] flex flex-col">
+      {/* Background image or gradient */}
+      {active.image ? (
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={active.image}
+            alt={active.heading}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/40" />
+        </div>
+      ) : (
+        <div className="absolute inset-0 z-0 bg-linear-to-br from-secondary to-[#0a3018]" />
+      )}
+
+      {/* Swiper — autoplay/pagination only, not visible */}
       <div
         className="swiper inset-0 w-full h-full opacity-0 pointer-events-none"
         style={{ position: "absolute" }}
@@ -67,7 +90,7 @@ export default function HeroSlider({ slides }: HeroSliderProps) {
         </div>
       </div>
 
-      {/* Content: heading + subheading căn giữa, chiếm phần còn lại phía trên dots */}
+      {/* Content */}
       <div className="relative z-10 flex-1 min-h-0 flex flex-col items-center justify-center w-full text-center px-6 py-6 max-w-[900px] mx-auto">
         <h1
           className="text-white font-semibold uppercase leading-tight mb-5 text-[clamp(28px,7vw,64px)] lg:text-[clamp(36px,5vw,72px)]"
